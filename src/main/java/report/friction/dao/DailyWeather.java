@@ -1,8 +1,10 @@
 package report.friction.dao;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 public class DailyWeather extends Weather{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,9 +14,9 @@ public class DailyWeather extends Weather{
     @JoinColumn(name="area_id")
     private ClimbingAreaEntity climbingArea;
 
-    @OneToOne
+    @OneToOne(mappedBy = "dailyWeather")
     private DailyFeelsLike dailyFeelsLike;
 
-    @OneToOne
+    @OneToOne(mappedBy = "dailyWeather")
     private DailyTemperature dailyTemperature;
 }

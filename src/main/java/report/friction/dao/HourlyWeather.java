@@ -1,8 +1,10 @@
 package report.friction.dao;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 public class HourlyWeather extends Weather{
 
     @Id

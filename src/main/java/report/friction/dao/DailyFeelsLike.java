@@ -1,14 +1,23 @@
 package report.friction.dao;
 
-import jakarta.persistence.Entity;
-import org.springframework.data.util.Pair;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 public class DailyFeelsLike {
 
-    private Pair<String, Double> day;
-    private Pair<String, Double> night;
-    private Pair<String, Double> evening;
-    private Pair<String, Double> morning;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name="day_id")
+    private DailyWeather dailyWeather;
+
+    private Double day;
+    private Double night;
+    private Double evening;
+    private Double morning;
 
 }
