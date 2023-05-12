@@ -1,4 +1,4 @@
-package report.friction.repositories;
+package report.friction.dao;
 
 public class ClimbingAreaRepository {
 }

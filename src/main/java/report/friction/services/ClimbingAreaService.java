@@ -1,4 +1,8 @@
 package report.friction.services;
 
-public class ClimbingAreaService {
+import report.friction.models.ClimbingAreaObj;
+
+public interface ClimbingAreaService {
+
+    public ClimbingAreaObj getClimbingAreaData(String areaName);
 }
