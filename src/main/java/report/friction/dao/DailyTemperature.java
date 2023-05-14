@@ -22,4 +22,68 @@ public class DailyTemperature {
     private Double night;
     private Double evening;
     private Double morning;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public DailyWeather getDailyWeather() {
+        return dailyWeather;
+    }
+
+    public void setDailyWeather(DailyWeather dailyWeather) {
+        this.dailyWeather = dailyWeather;
+    }
+
+    public Double getDay() {
+        return day;
+    }
+
+    public void setDay(Double day) {
+        this.day = day;
+    }
+
+    public Double getMin() {
+        return min;
+    }
+
+    public void setMin(Double min) {
+        this.min = min;
+    }
+
+    public Double getMax() {
+        return max;
+    }
+
+    public void setMax(Double max) {
+        this.max = max;
+    }
+
+    public Double getNight() {
+        return night;
+    }
+
+    public void setNight(Double night) {
+        this.night = night;
+    }
+
+    public Double getEvening() {
+        return evening;
+    }
+
+    public void setEvening(Double evening) {
+        this.evening = evening;
+    }
+
+    public Double getMorning() {
+        return morning;
+    }
+
+    public void setMorning(Double morning) {
+        this.morning = morning;
+    }
 }

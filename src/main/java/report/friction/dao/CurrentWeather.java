@@ -18,4 +18,35 @@ public class CurrentWeather extends Weather{
     private Double feelsLike;
     private Double temperature;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ClimbingAreaEntity getClimbingArea() {
+        return climbingArea;
+    }
+
+    public void setClimbingArea(ClimbingAreaEntity climbingArea) {
+        this.climbingArea = climbingArea;
+    }
+
+    public Double getFeelsLike() {
+        return feelsLike;
+    }
+
+    public void setFeelsLike(Double feelsLike) {
+        this.feelsLike = feelsLike;
+    }
+
+    public Double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(Double temperature) {
+        this.temperature = temperature;
+    }
 }
