@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class DailyWeather extends Weather{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long dailyWeatherId;
 
     @ManyToOne
     @JoinColumn(name="area_id")
@@ -20,12 +20,12 @@ public class DailyWeather extends Weather{
     @OneToOne(mappedBy = "dailyWeather")
     private DailyTemperature dailyTemperature;
 
-    public Long getId() {
-        return id;
+    public Long getDailyWeatherId() {
+        return dailyWeatherId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDailyWeatherId(Long dailyWeatherId) {
+        this.dailyWeatherId = dailyWeatherId;
     }
 
     public ClimbingAreaEntity getClimbingArea() {

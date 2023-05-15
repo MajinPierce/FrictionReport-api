@@ -13,7 +13,7 @@ public class ClimbingAreaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long areaId;
     private String areaName;
     private Double latitude;
     private Double longitude;
@@ -30,12 +30,12 @@ public class ClimbingAreaEntity {
         this.updatedAt = Instant.now();
     }
 
-    public Long getId() {
-        return id;
+    public Long getAreaId() {
+        return areaId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAreaId(Long id) {
+        this.areaId = areaId;
     }
 
     public String getAreaName() {

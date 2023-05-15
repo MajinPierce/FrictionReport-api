@@ -21,8 +21,6 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     private String openWeatherApiKey;
     private static final String OPEN_WEATHER_DOMAIN = "https://api.openweathermap.org/data/3.0/onecall?";
     private static final Integer CACHING_TIMEOUT_SECONDS = 600;
-    String ledaLatitude = "35.23649";
-    String ledaLongitude = "-85.22971";
 
     private final ClimbingAreaRepository climbingAreaRepository;
 
@@ -35,8 +33,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     public ClimbingAreaObj getClimbingAreaData(String areaName) {
         System.out.println(openWeatherApiKey);
         ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(areaName);
-        //if(area.getUpdatedAt() == null || Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS){
-        if(true){
+        if(area.getUpdatedAt() == null || Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS){
             try{
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder(
@@ -55,9 +52,9 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     }
 
     private String buildApiUrl(ClimbingAreaEntity area){
-        //System.out.println(area.getAreaName());
+        System.out.println(area.getAreaName());
         //openWeatherApiKey set in env vars
-        return String.format("%slat=%s&lon=%s&exclude=minutely&units=imperial&appid=%s",
-                OPEN_WEATHER_DOMAIN , ledaLatitude, ledaLongitude, openWeatherApiKey);
+        return String.format("%slat=%f&lon=%f&exclude=minutely&units=imperial&appid=%s",
+                OPEN_WEATHER_DOMAIN , area.getLatitude(), area.getLongitude(), openWeatherApiKey);
     }
 }

@@ -9,7 +9,7 @@ public class CurrentWeather extends Weather{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long currentWeatherId;
 
     @OneToOne
     @JoinColumn(name="area_id")
@@ -18,12 +18,12 @@ public class CurrentWeather extends Weather{
     private Double feelsLike;
     private Double temperature;
 
-    public Long getId() {
-        return id;
+    public Long getCurrentWeatherId() {
+        return currentWeatherId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCurrentWeatherId(Long currentWeatherId) {
+        this.currentWeatherId = currentWeatherId;
     }
 
     public ClimbingAreaEntity getClimbingArea() {

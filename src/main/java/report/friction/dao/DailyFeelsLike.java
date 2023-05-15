@@ -9,10 +9,10 @@ public class DailyFeelsLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long dailyFeelsLikeId;
 
     @OneToOne
-    @JoinColumn(name="day_id")
+    @JoinColumn(name="daily_weather_id")
     private DailyWeather dailyWeather;
 
     private Double day;
@@ -20,12 +20,12 @@ public class DailyFeelsLike {
     private Double evening;
     private Double morning;
 
-    public Long getId() {
-        return id;
+    public Long getDailyFeelsLikeId() {
+        return dailyFeelsLikeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDailyFeelsLikeId(Long dailyFeelsLikeId) {
+        this.dailyFeelsLikeId = dailyFeelsLikeId;
     }
 
     public DailyWeather getDailyWeather() {

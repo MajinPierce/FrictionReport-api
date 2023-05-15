@@ -9,7 +9,7 @@ public class HourlyWeather extends Weather{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long hourlyWeatherId;
 
     @ManyToOne
     @JoinColumn(name="area_id")
@@ -18,12 +18,12 @@ public class HourlyWeather extends Weather{
     private Double feelsLike;
     private Double temperature;
 
-    public Long getId() {
-        return id;
+    public Long getHourlyWeatherId() {
+        return hourlyWeatherId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setHourlyWeatherId(Long hourlyWeatherId) {
+        this.hourlyWeatherId = hourlyWeatherId;
     }
 
     public ClimbingAreaEntity getClimbingArea() {

@@ -10,10 +10,10 @@ public class DailyTemperature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long dailyTemperatureId;
 
     @OneToOne
-    @JoinColumn(name="day_id")
+    @JoinColumn(name="daily_weather_id")
     private DailyWeather dailyWeather;
 
     private Double day;
@@ -23,12 +23,12 @@ public class DailyTemperature {
     private Double evening;
     private Double morning;
 
-    public Long getId() {
-        return id;
+    public Long getDailyTemperatureId() {
+        return dailyTemperatureId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDailyTemperatureId(Long dailyTemperatureId) {
+        this.dailyTemperatureId = dailyTemperatureId;
     }
 
     public DailyWeather getDailyWeather() {
