@@ -1,5 +1,8 @@
-package report.friction.dao;
+package report.friction.models.weather;
 
+import jakarta.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Weather {
 
     private Integer dt;

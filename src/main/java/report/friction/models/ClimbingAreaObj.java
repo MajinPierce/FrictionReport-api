@@ -1,9 +1,9 @@
 package report.friction.models;
 
 import lombok.Data;
-import report.friction.dao.CurrentWeather;
-import report.friction.dao.DailyWeather;
-import report.friction.dao.HourlyWeather;
+import report.friction.models.weather.CurrentWeather;
+import report.friction.models.weather.DailyWeather;
+import report.friction.models.weather.HourlyWeather;
 
 import java.time.Instant;
 import java.util.ArrayList;

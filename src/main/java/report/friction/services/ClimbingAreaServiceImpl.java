@@ -10,8 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
 
-import report.friction.dao.ClimbingAreaEntity;
-import report.friction.dao.ClimbingAreaRepository;
+import report.friction.models.ClimbingAreaEntity;
+import report.friction.repositories.ClimbingAreaRepository;
 import report.friction.models.ClimbingAreaObj;
 
 @Service

@@ -1,10 +1,13 @@
-package report.friction.dao;
+package report.friction.models;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import report.friction.models.weather.CurrentWeather;
+import report.friction.models.weather.DailyWeather;
+import report.friction.models.weather.HourlyWeather;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="ClimbingArea")
@@ -13,30 +16,26 @@ public class ClimbingAreaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long areaId;
+    private Long id;
     private String areaName;
     private Double latitude;
     private Double longitude;
     private Instant updatedAt;
-    @OneToOne(mappedBy = "climbingArea")
+    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL, orphanRemoval=true)
     private CurrentWeather currentWeather;
-    @OneToMany(mappedBy = "climbingArea")
-    private ArrayList<HourlyWeather> hourlyWeather;
-    @OneToMany(mappedBy = "climbingArea")
-    private ArrayList<DailyWeather> dailyWeather;
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<HourlyWeather> hourlyWeather;
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<DailyWeather> dailyWeather;
 
-    @PreUpdate
+    @PostUpdate
     protected void onUpdate() {
         this.updatedAt = Instant.now();
     }
 
-    public Long getAreaId() {
-        return areaId;
-    }
+    public Long getId() { return id; }
 
-    public void setAreaId(Long id) {
-        this.areaId = areaId;
-    }
+    public void setId(Long id) { this.id = id; }
 
     public String getAreaName() {
         return areaName;
@@ -78,19 +77,19 @@ public class ClimbingAreaEntity {
         this.currentWeather = currentWeather;
     }
 
-    public ArrayList<HourlyWeather> getHourlyWeather() {
+    public List<HourlyWeather> getHourlyWeather() {
         return hourlyWeather;
     }
 
-    public void setHourlyWeather(ArrayList<HourlyWeather> hourlyWeather) {
+    public void setHourlyWeather(List<HourlyWeather> hourlyWeather) {
         this.hourlyWeather = hourlyWeather;
     }
 
-    public ArrayList<DailyWeather> getDailyWeather() {
+    public List<DailyWeather> getDailyWeather() {
         return dailyWeather;
     }
 
-    public void setDailyWeather(ArrayList<DailyWeather> dailyWeather) {
+    public void setDailyWeather(List<DailyWeather> dailyWeather) {
         this.dailyWeather = dailyWeather;
     }
 }
