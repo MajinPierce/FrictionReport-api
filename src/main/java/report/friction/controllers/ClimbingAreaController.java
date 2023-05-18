@@ -5,7 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import report.friction.models.ClimbingAreaObj;
+import report.friction.models.ClimbingAreaEntity;
 import report.friction.services.ClimbingAreaService;
 import report.friction.services.ClimbingAreaServiceImpl;
 
@@ -22,7 +22,7 @@ public class ClimbingAreaController {
     };
 
     @GetMapping("/{areaName}")
-    public ResponseEntity<ClimbingAreaObj> getClimbingAreaData(@PathVariable String areaName){
+    public ResponseEntity<ClimbingAreaEntity> getClimbingAreaData(@PathVariable String areaName){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         headers.add("Allow", "GET");

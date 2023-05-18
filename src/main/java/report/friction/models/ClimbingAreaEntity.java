@@ -1,41 +1,56 @@
 package report.friction.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 import report.friction.models.weather.CurrentWeather;
 import report.friction.models.weather.DailyWeather;
 import report.friction.models.weather.HourlyWeather;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="ClimbingArea")
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClimbingAreaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @JsonIgnore
+    private Integer id;
+    @JsonIgnore
     private String areaName;
-    private Double latitude;
-    private Double longitude;
+    @JsonIgnore
+    private Double lat;
+    @JsonIgnore
+    private Double lon;
+    private String timezone;
+    @JsonProperty("timezone_offset")
+    private Integer timezoneOffset;
     private Instant updatedAt;
-    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL, orphanRemoval=true)
+    @JsonProperty("current")
+    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL)
     private CurrentWeather currentWeather;
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval=true)
-    private List<HourlyWeather> hourlyWeather;
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval=true)
-    private List<DailyWeather> dailyWeather;
+    @JsonProperty("hourly")
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL)
+    private List<HourlyWeather> hourlyWeather = new ArrayList<>();
+    @JsonProperty("daily")
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL)
+    private List<DailyWeather> dailyWeather = new ArrayList<>();
 
     @PostUpdate
     protected void onUpdate() {
         this.updatedAt = Instant.now();
     }
 
-    public Long getId() { return id; }
+    public Integer getId() { return id; }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getAreaName() {
         return areaName;
@@ -45,21 +60,29 @@ public class ClimbingAreaEntity {
         this.areaName = areaName;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Double getLat() {
+        return lat;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public Double getLon() {
+        return lon;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setLon(Double lon) {
+        this.lon = lon;
     }
+
+    public String getTimezone() { return timezone; }
+
+    public void setTimezone(String timezone) { this.timezone = timezone; }
+
+    public Integer getTimezoneOffset() { return timezoneOffset; }
+
+    public void setTimezoneOffset(Integer timezoneOffset) { this.timezoneOffset = timezoneOffset; }
 
     public Instant getUpdatedAt() {
         return updatedAt;

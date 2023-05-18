@@ -34,8 +34,8 @@ public class StartupService implements ApplicationListener<ApplicationReadyEvent
             while ((nextRecord = csvReader.readNext()) != null) {
                 ClimbingAreaEntity area = new ClimbingAreaEntity();
                 area.setAreaName(nextRecord[0]);
-                area.setLatitude(Double.parseDouble(nextRecord[1]));
-                area.setLongitude(Double.parseDouble(nextRecord[2]));
+                area.setLat(Double.parseDouble(nextRecord[1]));
+                area.setLon(Double.parseDouble(nextRecord[2]));
                 climbingAreaRepository.save(area);
                 System.out.println(nextRecord[0] + " " + nextRecord[1] + " " + nextRecord[2]);
             }

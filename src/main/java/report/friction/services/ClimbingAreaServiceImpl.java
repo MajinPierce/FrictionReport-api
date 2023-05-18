@@ -8,11 +8,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Instant;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import report.friction.models.ClimbingAreaEntity;
 import report.friction.repositories.ClimbingAreaRepository;
-import report.friction.models.ClimbingAreaObj;
 
 @Service
 public class ClimbingAreaServiceImpl implements ClimbingAreaService{
@@ -30,10 +30,9 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     }
 
     @Override
-    public ClimbingAreaObj getClimbingAreaData(String areaName) {
-        System.out.println(openWeatherApiKey);
+    public ClimbingAreaEntity getClimbingAreaData(String areaName) {
         ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(areaName);
-        if(area.getUpdatedAt() == null || Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS){
+        //if(area.getUpdatedAt() == null || Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS){
             try{
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder(
@@ -41,20 +40,25 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
                         .header("Content-Type", "application/json").build();
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 System.out.println(request);
-                System.out.println("OWM Response Code: " + response.statusCode());
+                System.out.println(response.body());
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.readerForUpdating(area).readValue(response.body());
+                climbingAreaRepository.save(area);
+                return area;
             } catch(Exception e){
                 System.out.println(e);
+                return null;
             }
-        } else {
-            System.out.println("else");
-        }
-        return null;
+        //} else {
+        //    System.out.println("else");
+        //}
+
     }
 
     private String buildApiUrl(ClimbingAreaEntity area){
         System.out.println(area.getAreaName());
         //openWeatherApiKey set in env vars
         return String.format("%slat=%f&lon=%f&exclude=minutely&units=imperial&appid=%s",
-                OPEN_WEATHER_DOMAIN , area.getLatitude(), area.getLongitude(), openWeatherApiKey);
+                OPEN_WEATHER_DOMAIN , area.getLat(), area.getLon(), openWeatherApiKey);
     }
 }

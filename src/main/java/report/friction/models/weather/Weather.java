@@ -1,18 +1,38 @@
 package report.friction.models.weather;
 
-import jakarta.persistence.MappedSuperclass;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
-@MappedSuperclass
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Weather {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private Integer dt;
     private Integer humidity;
+    @JsonProperty("dew_point")
     private Double dewPoint;
+    private Integer pressure;
+    @JsonProperty("wind_speed")
     private Double windSpeed;
-    private String weatherType;
-    private String weatherDescription;
+    @JsonProperty("wind_deg")
+    private Integer windDegree;
+    @JsonProperty("wind_gust")
+    private Double windGust;
+    @JsonProperty("clouds")
     private Integer cloudCover;
     private Double uvi;
+    @JsonProperty("weather")
+    @ManyToMany(mappedBy="weather")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private List<WeatherDescription> weatherDescription = new ArrayList<>();
 
     public Integer getDt() {
         return dt;
@@ -38,6 +58,10 @@ public abstract class Weather {
         this.dewPoint = dewPoint;
     }
 
+    public Integer getPressure() { return pressure; }
+
+    public void setPressure(Integer pressure) { this.pressure = pressure; }
+
     public Double getWindSpeed() {
         return windSpeed;
     }
@@ -46,29 +70,19 @@ public abstract class Weather {
         this.windSpeed = windSpeed;
     }
 
-    public String getWeatherType() {
-        return weatherType;
-    }
+    public Integer getWindDegree() { return windDegree; }
 
-    public void setWeatherType(String weatherType) {
-        this.weatherType = weatherType;
-    }
+    public void setWindDegree(Integer windDegree) { this.windDegree = windDegree; }
 
-    public String getWeatherDescription() {
-        return weatherDescription;
-    }
+    public Double getWindGust() { return windGust; }
 
-    public void setWeatherDescription(String weatherDescription) {
-        this.weatherDescription = weatherDescription;
-    }
+    public void setWindGust(Double windGust) { this.windGust = windGust; }
 
     public Integer getCloudCover() {
         return cloudCover;
     }
 
-    public void setCloudCover(Integer cloudCover) {
-        this.cloudCover = cloudCover;
-    }
+    public void setCloudCover(Integer cloudCover) { this.cloudCover = cloudCover; }
 
     public Double getUvi() {
         return uvi;
@@ -76,5 +90,16 @@ public abstract class Weather {
 
     public void setUvi(Double uvi) {
         this.uvi = uvi;
+    }
+
+    public List<WeatherDescription> getWeatherDescription() {
+        return weatherDescription;
+    }
+
+    public void setWeatherDescription(List<WeatherDescription> weatherDescription) {
+        if(!this.weatherDescription.isEmpty()) {
+            this.weatherDescription.clear();
+        }
+        this.weatherDescription.addAll(weatherDescription);
     }
 }
