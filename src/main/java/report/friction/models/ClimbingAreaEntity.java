@@ -3,6 +3,7 @@ package report.friction.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 import report.friction.models.weather.CurrentWeather;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name="ClimbingArea")
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)

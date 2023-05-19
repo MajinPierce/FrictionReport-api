@@ -42,7 +42,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
                 System.out.println(request);
                 System.out.println(response.body());
                 ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.readerForUpdating(area).readValue(response.body());
+                area = objectMapper.readerForUpdating(area).readValue(response.body());
                 climbingAreaRepository.save(area);
                 return area;
             } catch(Exception e){
