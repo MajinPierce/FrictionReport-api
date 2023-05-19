@@ -7,6 +7,8 @@ import jakarta.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO entity is either not being created by mapper or not persisted correctly
+
 @Entity
 public class WeatherDescription {
 

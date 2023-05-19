@@ -8,6 +8,9 @@ import report.friction.models.ClimbingAreaEntity;
 
 import java.util.Map;
 
+//TODO remove list element index wrapper in final api response if possible
+// - no need to have that extra layer of complexity when dt is already a property
+
 @Entity
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,6 +23,8 @@ public class HourlyWeather extends Weather {
     private Integer visibility;
     @JsonProperty("pop")
     private Integer probabilityOfPrecipitation;
+    //TODO figure out why nested rain/snow elements throwing error/not mapping correctly
+    // - feelsLike property in dailyWeather seems the exact same but it works and this doesn't
 //    @ElementCollection
 //    @MapKeyColumn(name="timeframe")
 //    @Column(name="unit_per_hour")
@@ -30,6 +35,7 @@ public class HourlyWeather extends Weather {
 //    @Column(name="unit_per_hour")
 //    @JsonProperty("snow")
 //    private Map<String, Double> snow;
+    //TODO make climbingArea reference not null in db
     @ManyToOne
     private ClimbingAreaEntity climbingArea;
 

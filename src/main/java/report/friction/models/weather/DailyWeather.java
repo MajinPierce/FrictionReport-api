@@ -9,6 +9,9 @@ import report.friction.models.ClimbingAreaEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO remove list element index wrapper in final api response if possible
+// - no need to have that extra layer of complexity when dt is already a property
+
 @Entity
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -34,6 +37,7 @@ public class DailyWeather extends Weather {
     private Map<String, Double> temperature;
     @JsonProperty("pop")
     private Integer probabilityOfPrecipitation;
+    //TODO make climbingArea reference not null in db
     @ManyToOne
     private ClimbingAreaEntity climbingArea;
 
