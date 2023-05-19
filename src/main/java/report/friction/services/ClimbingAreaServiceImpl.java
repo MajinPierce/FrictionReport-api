@@ -41,6 +41,9 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 System.out.println(request);
                 System.out.println(response.body());
+                //FIXME creates new rows on the weather column for each call
+                // - only updates the area row (as intended)
+                // - creates new rows of weather data for each area which means orphan data
                 ObjectMapper objectMapper = new ObjectMapper();
                 area = objectMapper.readerForUpdating(area).readValue(response.body());
                 climbingAreaRepository.save(area);

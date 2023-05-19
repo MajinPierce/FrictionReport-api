@@ -35,7 +35,7 @@ public class HourlyWeather extends Weather {
 //    @Column(name="unit_per_hour")
 //    @JsonProperty("snow")
 //    private Map<String, Double> snow;
-    //TODO make climbingArea reference not null in db
+    //FIXME make climbingArea reference not null in db
     @ManyToOne
     private ClimbingAreaEntity climbingArea;
 

@@ -37,7 +37,7 @@ public class DailyWeather extends Weather {
     private Map<String, Double> temperature;
     @JsonProperty("pop")
     private Integer probabilityOfPrecipitation;
-    //TODO make climbingArea reference not null in db
+    //FIXME make climbingArea reference not null in db
     @ManyToOne
     private ClimbingAreaEntity climbingArea;
 

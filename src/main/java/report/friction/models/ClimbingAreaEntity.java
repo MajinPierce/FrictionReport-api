@@ -34,10 +34,10 @@ public class ClimbingAreaEntity {
     private String timezone;
     @JsonProperty("timezone_offset")
     private Integer timezoneOffset;
-    //TODO updatedAt value not being set
-    // preUpdate vs postUpdate?
+    //FIXME updatedAt value not being set
+    // - preUpdate vs postUpdate?
     private Instant updatedAt;
-    //TODO entity relationships not setting climbing area foreign key id
+    //FIXME entity relationships not setting climbing area foreign key id
     @JsonProperty("current")
     @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL)
     private CurrentWeather currentWeather;

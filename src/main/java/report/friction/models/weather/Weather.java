@@ -96,7 +96,7 @@ public abstract class Weather {
         return weatherDescription;
     }
 
-    //TODO fix weather description setter method, probably why it's not being populated
+    //TODO test if weather description setter method is why it's not being populated
     // - except daily weather setTemperature seems to work (though a map, not a list)
     public void setWeatherDescription(List<WeatherDescription> weatherDescription) {
         if(!this.weatherDescription.isEmpty()) {
