@@ -11,7 +11,6 @@ import report.friction.models.weather.DailyWeather;
 import report.friction.models.weather.HourlyWeather;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,10 +42,10 @@ public class ClimbingAreaEntity {
     private CurrentWeather currentWeather;
     @JsonProperty("hourly")
     @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL)
-    private List<HourlyWeather> hourlyWeather = new ArrayList<>();
+    private List<HourlyWeather> hourlyWeather;
     @JsonProperty("daily")
     @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL)
-    private List<DailyWeather> dailyWeather = new ArrayList<>();
+    private List<DailyWeather> dailyWeather;
 
     @PostUpdate
     protected void onUpdate() {

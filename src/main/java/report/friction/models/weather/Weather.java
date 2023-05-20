@@ -6,7 +6,6 @@ import lombok.Data;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,10 +30,10 @@ public abstract class Weather {
     @JsonProperty("clouds")
     private Integer cloudCover;
     private Double uvi;
+    //FIXME all fields are null
     @JsonProperty("weather")
-    @ManyToMany(mappedBy="weather")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private List<WeatherDescription> weatherDescription = new ArrayList<>();
+    @OneToMany(mappedBy="weather")
+    private List<WeatherDescription> weatherDescription;
 
     public List<WeatherDescription> getWeatherDescription() {
         return weatherDescription;
