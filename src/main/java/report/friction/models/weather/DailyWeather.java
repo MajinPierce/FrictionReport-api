@@ -41,34 +41,6 @@ public class DailyWeather extends Weather {
     @ManyToOne
     private ClimbingAreaEntity climbingArea;
 
-    public Integer getSunrise() { return sunrise; }
-
-    public void setSunrise(Integer sunrise) { this.sunrise = sunrise; }
-
-    public Integer getSunset() { return sunset; }
-
-    public void setSunset(Integer sunset) { this.sunset = sunset; }
-
-    public Integer getMoonrise() { return moonrise; }
-
-    public void setMoonrise(Integer moonrise) { this.moonrise = moonrise; }
-
-    public Integer getMoonset() { return moonset; }
-
-    public void setMoonset(Integer moonset) { this.moonset = moonset; }
-
-    public Double getMoonPhase() { return moonPhase; }
-
-    public void setMoonPhase(Double moonPhase) { this.moonPhase = moonPhase; }
-
-    public Double getRain() { return rain; }
-
-    public void setRain(Double rain) { this.rain = rain; }
-
-    public Double getSnow() { return snow; }
-
-    public void setSnow(Double snow) { this.snow = snow; }
-
     public Map<String, Double> getFeelsLike() { return feelsLike; }
 
     public void setFeelsLike(Map<String, Double> feelsLike) {
@@ -89,12 +61,6 @@ public class DailyWeather extends Weather {
             this.temperature.clear();
             this.temperature.putAll(temperature);
         }
-    }
-
-    public Integer getProbabilityOfPrecipitation() { return probabilityOfPrecipitation; }
-
-    public void setProbabilityOfPrecipitation(Integer probabilityOfPrecipitation) {
-        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
     }
 
     public ClimbingAreaEntity getClimbingArea() { return climbingArea; }

@@ -39,32 +39,6 @@ public class HourlyWeather extends Weather {
     @ManyToOne
     private ClimbingAreaEntity climbingArea;
 
-    public Double getFeelsLike() {
-        return feelsLike;
-    }
-
-    public void setFeelsLike(Double feelsLike) {
-        this.feelsLike = feelsLike;
-    }
-
-    public Double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
-    }
-
-    public Integer getVisibility() { return visibility; }
-
-    public void setVisibility(Integer visibility) { this.visibility = visibility; }
-
-    public Integer getProbabilityOfPrecipitation() { return probabilityOfPrecipitation; }
-
-    public void setProbabilityOfPrecipitation(Integer probabilityOfPrecipitation) {
-        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
-    }
-
 //    public Map<String, Double> getRain() { return rain; }
 //
 //    public void setRain(Map<String, Double> rain) { this.rain = rain; }

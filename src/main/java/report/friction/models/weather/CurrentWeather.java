@@ -36,34 +36,6 @@ public class CurrentWeather extends Weather {
     @OneToOne
     private ClimbingAreaEntity climbingArea;
 
-    public Double getFeelsLike() {
-        return feelsLike;
-    }
-
-    public void setFeelsLike(Double feelsLike) {
-        this.feelsLike = feelsLike;
-    }
-
-    public Double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
-    }
-
-    public Integer getSunrise() { return sunrise; }
-
-    public void setSunrise(Integer sunrise) { this.sunrise = sunrise; }
-
-    public Integer getSunset() { return sunset; }
-
-    public void setSunset(Integer sunset) { this.sunset = sunset; }
-
-    public Integer getVisibility() { return visibility; }
-
-    public void setVisibility(Integer visibility) { this.visibility = visibility; }
-
 //    public Map<String, Double> getRain() { return rain; }
 //
 //    public void setRain(Map<String, Double> rain) { this.rain = rain; }
