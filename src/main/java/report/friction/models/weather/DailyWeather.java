@@ -1,5 +1,6 @@
 package report.friction.models.weather;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -16,9 +17,11 @@ import java.util.Map;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyWeather extends Weather {
 
+    @ManyToOne
+    @JsonBackReference
+    private ClimbingAreaEntity climbingArea;
     private Integer sunrise;
     private Integer sunset;
     private Integer moonrise;
@@ -39,33 +42,5 @@ public class DailyWeather extends Weather {
     private Map<String, Double> temperature;
     @JsonProperty("pop")
     private Integer probabilityOfPrecipitation;
-    //FIXME make climbingArea reference not null in db
-    @ManyToOne
-    private ClimbingAreaEntity climbingArea;
 
-    public Map<String, Double> getFeelsLike() { return feelsLike; }
-
-    public void setFeelsLike(Map<String, Double> feelsLike) {
-        if(this.feelsLike == null){
-            this.feelsLike = feelsLike;
-        } else {
-            this.feelsLike.clear();
-            this.feelsLike.putAll(feelsLike);
-        }
-    }
-
-    public Map<String, Double> getTemperature() { return temperature; }
-
-    public void setTemperature(Map<String, Double> temperature) {
-        if(this.temperature == null){
-            this.temperature = temperature;
-        } else{
-            this.temperature.clear();
-            this.temperature.putAll(temperature);
-        }
-    }
-
-    public ClimbingAreaEntity getClimbingArea() { return climbingArea; }
-
-    public void setClimbingArea(ClimbingAreaEntity climbingArea) { this.climbingArea = climbingArea; }
 }

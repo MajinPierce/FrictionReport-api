@@ -1,5 +1,6 @@
 package report.friction.models.weather;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -15,6 +16,9 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentWeather extends Weather {
 
+    @OneToOne
+    @JsonBackReference
+    private ClimbingAreaEntity climbingArea;
     @JsonProperty("feels_like")
     private Double feelsLike;
     @JsonProperty("temp")
@@ -34,19 +38,5 @@ public class CurrentWeather extends Weather {
 //    @Column(name="unit_per_hour")
 //    @JsonProperty("snow")
 //    private Map<String, Double> snow;
-    //FIXME make climbingArea reference not null in db
-    @OneToOne
-    private ClimbingAreaEntity climbingArea;
 
-//    public Map<String, Double> getRain() { return rain; }
-//
-//    public void setRain(Map<String, Double> rain) { this.rain = rain; }
-//
-//    public Map<String, Double> getSnow() { return snow; }
-//
-//    public void setSnow(Map<String, Double> snow) { this.snow = snow; }
-
-    public ClimbingAreaEntity getClimbingArea() { return climbingArea; }
-
-    public void setClimbingArea(ClimbingAreaEntity climbingArea) { this.climbingArea = climbingArea; }
 }

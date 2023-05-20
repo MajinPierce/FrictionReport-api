@@ -1,6 +1,6 @@
 package report.friction.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,9 +15,8 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name="ClimbingArea")
+@Table(name="climbing_area")
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClimbingAreaEntity {
 
     @Id
@@ -33,21 +32,21 @@ public class ClimbingAreaEntity {
     private String timezone;
     @JsonProperty("timezone_offset")
     private Integer timezoneOffset;
-    //FIXME updatedAt value not being set
-    // - preUpdate vs postUpdate?
     private Instant updatedAt;
-    //FIXME entity relationships not setting climbing area foreign key id
     @JsonProperty("current")
+    @JsonManagedReference
     @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL)
     private CurrentWeather currentWeather;
     @JsonProperty("hourly")
+    @JsonManagedReference
     @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL)
     private List<HourlyWeather> hourlyWeather;
     @JsonProperty("daily")
+    @JsonManagedReference
     @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL)
     private List<DailyWeather> dailyWeather;
 
-    @PostUpdate
+    @PreUpdate
     protected void onUpdate() {
         this.updatedAt = Instant.now();
     }

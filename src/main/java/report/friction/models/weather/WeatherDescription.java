@@ -1,7 +1,7 @@
 package report.friction.models.weather;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherDescription {
 
     @Id
@@ -23,13 +22,7 @@ public class WeatherDescription {
     private String description;
     private String icon;
     @ManyToOne
+    @JsonBackReference
     private Weather weather;
 
-    public Weather getWeather() {
-        return weather;
-    }
-
-    public void setWeather(Weather weather) {
-        this.weather = weather;
-    }
 }

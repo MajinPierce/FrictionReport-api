@@ -1,10 +1,10 @@
 package report.friction.models.weather;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+
 
 import java.util.List;
 
@@ -32,21 +32,8 @@ public abstract class Weather {
     private Double uvi;
     //FIXME all fields are null
     @JsonProperty("weather")
-    @OneToMany(mappedBy="weather")
+    @JsonManagedReference
+    @OneToMany(mappedBy="weather", cascade=CascadeType.ALL)
     private List<WeatherDescription> weatherDescription;
 
-    public List<WeatherDescription> getWeatherDescription() {
-        return weatherDescription;
-    }
-
-    //TODO test if weather description setter method is why it's not being populated
-    // - except daily weather setTemperature seems to work (though a map, not a list)
-    public void setWeatherDescription(List<WeatherDescription> weatherDescription) {
-        if(this.weatherDescription == null){
-            this.weatherDescription = weatherDescription;
-        } else {
-            this.weatherDescription.clear();
-            this.weatherDescription.addAll(weatherDescription);
-        }
-    }
 }
