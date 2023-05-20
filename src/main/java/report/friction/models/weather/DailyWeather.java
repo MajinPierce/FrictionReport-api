@@ -3,6 +3,7 @@ package report.friction.models.weather;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import report.friction.models.ClimbingAreaEntity;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 // - no need to have that extra layer of complexity when dt is already a property
 
 @Entity
+@Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyWeather extends Weather {
