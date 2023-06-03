@@ -29,17 +29,17 @@ public class HourlyWeather extends Weather {
     private Integer visibility;
     @JsonProperty("pop")
     private Integer probabilityOfPrecipitation;
-    //TODO figure out why nested rain/snow elements throwing error/not mapping correctly
-    // - feelsLike property in dailyWeather seems the exact same but it works and this doesn't
-//    @ElementCollection
-//    @MapKeyColumn(name="timeframe")
-//    @Column(name="unit_per_hour")
-//    @JsonProperty("rain")
-//    private Map<String, Double> rain;
-//    @ElementCollection
-//    @MapKeyColumn(name="timeframe")
-//    @Column(name="unit_per_hour")
-//    @JsonProperty("snow")
-//    private Map<String, Double> snow;
+    //there was an error with hibernate mapping and ElementCollection
+    //updating from 6.1.7 -> 6.2.4 fixed
+    @ElementCollection
+    @MapKeyColumn(name="timeframe")
+    @Column(name="unit_per_hour")
+    @JsonProperty("rain")
+    private Map<String, Double> rain;
+    @ElementCollection
+    @MapKeyColumn(name="timeframe")
+    @Column(name="unit_per_hour")
+    @JsonProperty("snow")
+    private Map<String, Double> snow;
 
 }

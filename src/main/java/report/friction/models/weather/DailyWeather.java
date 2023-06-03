@@ -1,14 +1,12 @@
 package report.friction.models.weather;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import report.friction.models.ClimbingAreaEntity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 //TODO remove list element index wrapper in final api response if possible
@@ -30,6 +28,7 @@ public class DailyWeather extends Weather {
     private Double moonPhase;
     private Double rain;
     private Double snow;
+    private String summary;
     @ElementCollection
     @MapKeyColumn(name="time_of_day")
     @Column(name="temperature")

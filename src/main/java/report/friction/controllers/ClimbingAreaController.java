@@ -21,7 +21,6 @@ public class ClimbingAreaController {
         this.climbingAreaService = climbingAreaService;
     };
 
-    //TODO ensure case-insensitivity for requests
     //TODO implement mapstruct to customize response weather data properties
     // - many are unnecessary for api consumer
     @GetMapping("/{areaName}")

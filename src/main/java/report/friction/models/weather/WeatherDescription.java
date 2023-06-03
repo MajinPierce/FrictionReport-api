@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//FIXME all fields are null
 //TODO remove list element index wrapper in final api response if possible
 
 @Entity

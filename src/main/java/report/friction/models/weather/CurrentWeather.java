@@ -26,17 +26,17 @@ public class CurrentWeather extends Weather {
     private Integer sunrise;
     private Integer sunset;
     private Integer visibility;
-    //TODO figure out why nested rain/snow elements throwing error/not mapping correctly
-    // - feelsLike property in dailyWeather seems the exact same but it works and this doesn't
-//    @ElementCollection
-//    @MapKeyColumn(name="timeframe")
-//    @Column(name="unit_per_hour")
-//    @JsonProperty("rain")
-//    private Map<String, Double> rain;
-//    @ElementCollection
-//    @MapKeyColumn(name="timeframe")
-//    @Column(name="unit_per_hour")
-//    @JsonProperty("snow")
-//    private Map<String, Double> snow;
+    @ElementCollection
+    @CollectionTable(name="current_rain")
+    @MapKeyColumn(name="timeframe")
+    @Column(name="unit_per_hour")
+    @JsonProperty("rain")
+    private Map<String, Double> rain;
+    @ElementCollection
+    @CollectionTable(name="current_snow")
+    @MapKeyColumn(name="timeframe")
+    @Column(name="unit_per_hour")
+    @JsonProperty("snow")
+    private Map<String, Double> snow;
 
 }

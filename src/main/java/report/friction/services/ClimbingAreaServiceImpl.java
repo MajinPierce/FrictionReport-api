@@ -1,5 +1,6 @@
 package report.friction.services;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +22,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     @Value("${OPEN_WEATHER_API_KEY}")
     private String openWeatherApiKey;
     private static final String OPEN_WEATHER_DOMAIN = "https://api.openweathermap.org/data/3.0/onecall?";
-    private static final Integer CACHING_TIMEOUT_SECONDS = 600;
+    private static final Long CACHING_TIMEOUT_SECONDS = 900L;
 
     private final ClimbingAreaRepository climbingAreaRepository;
 
@@ -31,9 +33,16 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
     @Override
     public ClimbingAreaEntity getClimbingAreaData(String areaName) {
-        ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(areaName);
-        //if(area.getUpdatedAt() == null || Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS){
+        ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(
+                areaName.replaceAll("[-+._:;,^~|]", "").trim().toLowerCase());
+        if(area.getUpdatedAt() != null) {
+            System.out.println(Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond());
+        } else {
+            System.out.println("null");
+        }
+        if(area.getUpdatedAt() == null || (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)){
             try{
+                System.out.println("open weather request");
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder(
                                 URI.create(buildApiUrl(area)))
@@ -41,21 +50,20 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 System.out.println(request);
                 System.out.println(response.body());
-                //FIXME creates new rows on the weather column for each call
-                // - only updates the area row (as intended)
-                // - creates new rows of weather data for each area which means orphan data
                 ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configOverride(ArrayNode.class).setMergeable(false);
                 area = objectMapper.readerForUpdating(area).readValue(response.body());
+                area.onUpdate();
                 climbingAreaRepository.save(area);
                 return area;
             } catch(Exception e){
+                //TODO better exception handling
                 System.out.println(e);
                 return null;
             }
-        //} else {
-        //    System.out.println("else");
-        //}
-
+        } else {
+            return area;
+        }
     }
 
     private String buildApiUrl(ClimbingAreaEntity area){

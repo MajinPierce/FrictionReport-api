@@ -30,7 +30,6 @@ public abstract class Weather {
     @JsonProperty("clouds")
     private Integer cloudCover;
     private Double uvi;
-    //FIXME all fields are null
     @JsonProperty("weather")
     @JsonManagedReference
     @OneToMany(mappedBy="weather", cascade=CascadeType.ALL)
