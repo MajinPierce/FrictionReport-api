@@ -35,21 +35,13 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     public ClimbingAreaEntity getClimbingAreaData(String areaName) {
         ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(
                 areaName.replaceAll("[-+._:;,^~|]", "").trim().toLowerCase());
-        if(area.getUpdatedAt() != null) {
-            System.out.println(Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond());
-        } else {
-            System.out.println("null");
-        }
         if(area.getUpdatedAt() == null || (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)){
             try{
-                System.out.println("open weather request");
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder(
                                 URI.create(buildApiUrl(area)))
                         .header("Content-Type", "application/json").build();
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                System.out.println(request);
-                System.out.println(response.body());
                 ObjectMapper objectMapper = new ObjectMapper();
                 objectMapper.configOverride(ArrayNode.class).setMergeable(false);
                 area = objectMapper.readerForUpdating(area).readValue(response.body());
@@ -67,7 +59,6 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     }
 
     private String buildApiUrl(ClimbingAreaEntity area){
-        System.out.println(area.getAreaName());
         //openWeatherApiKey set in env vars
         return String.format("%slat=%f&lon=%f&exclude=minutely&units=imperial&appid=%s",
                 OPEN_WEATHER_DOMAIN , area.getLat(), area.getLon(), openWeatherApiKey);
