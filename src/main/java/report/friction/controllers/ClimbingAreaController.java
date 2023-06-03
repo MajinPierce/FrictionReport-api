@@ -24,7 +24,7 @@ public class ClimbingAreaController {
     //TODO implement mapstruct to customize response weather data properties
     // - many are unnecessary for api consumer
     @GetMapping("/{areaName}")
-    public ResponseEntity<ClimbingAreaEntity> getClimbingAreaData(@PathVariable String areaName){
+    public ResponseEntity<ClimbingAreaEntity> getClimbingArea(@PathVariable String areaName){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         headers.add("Allow", "GET");
