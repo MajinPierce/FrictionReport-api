@@ -1,7 +1,6 @@
 package report.friction.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
     private final ClimbingAreaRepository climbingAreaRepository;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public ClimbingAreaServiceImpl(ClimbingAreaRepository climbingAreaRepository){
@@ -61,6 +60,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
         } catch (JsonProcessingException e){
             throw new JacksonMappingException("Error mapping OpenWeatherMap Api response to climbing area entity");
         } catch (java.io.IOException | InterruptedException e){
+            Thread.currentThread().interrupt();
             throw new OpenWeatherException("Error connecting to OpenWeatherMap Api");
         }
     }

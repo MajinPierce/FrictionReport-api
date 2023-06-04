@@ -19,7 +19,7 @@ public class ClimbingAreaController {
     @Autowired
     public ClimbingAreaController(ClimbingAreaServiceImpl climbingAreaService){
         this.climbingAreaService = climbingAreaService;
-    };
+    }
 
     @GetMapping(value={"", "/"})
     public ResponseEntity<String> getDefaultApiMessage(){
