@@ -24,11 +24,13 @@ import report.friction.repositories.ClimbingAreaRepository;
 public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
     @Value("${OPEN_WEATHER_API_KEY}")
-    private String openWeatherApiKey;
+    private String OPEN_WEATHER_API_KEY;
     private static final String OPEN_WEATHER_DOMAIN = "https://api.openweathermap.org/data/3.0/onecall?";
     private static final Long CACHING_TIMEOUT_SECONDS = 900L;
 
     private final ClimbingAreaRepository climbingAreaRepository;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public ClimbingAreaServiceImpl(ClimbingAreaRepository climbingAreaRepository){
@@ -36,24 +38,23 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     }
 
     @Override
-    public ClimbingAreaEntity getClimbingAreaData(String areaName) throws AreaNotFoundException{
+    public ClimbingAreaEntity getClimbingAreaData(String areaName)
+            throws AreaNotFoundException, JacksonMappingException, OpenWeatherException{
         try {
             ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(
-                    areaName.replaceAll("[-+._:;,^~|]", "").trim().toLowerCase());
+                    areaName.replaceAll("[-+._]", "").trim().toLowerCase());
             if(area == null){
                 throw new AreaNotFoundException("Climbing area not found: " + areaName);
             }
             if(area.getUpdatedAt() == null || (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)){
-                    HttpClient client = HttpClient.newHttpClient();
-                    HttpRequest request = HttpRequest.newBuilder(
-                                    URI.create(buildApiUrl(area)))
-                            .header("Content-Type", "application/json").build();
-                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    objectMapper.configOverride(ArrayNode.class).setMergeable(false);
-                    area = objectMapper.readerForUpdating(area).readValue(response.body());
-                    area.onUpdate();
-                    return climbingAreaRepository.save(area);
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder(
+                                URI.create(buildApiUrl(area)))
+                        .header("Content-Type", "application/json").build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                area = objectMapper.readerForUpdating(area).readValue(response.body());
+                area.onUpdate();
+                return climbingAreaRepository.save(area);
             } else {
                 return area;
             }
@@ -67,6 +68,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     private String buildApiUrl(ClimbingAreaEntity area){
         //openWeatherApiKey set in env vars
         return String.format("%slat=%f&lon=%f&exclude=minutely&units=imperial&appid=%s",
-                OPEN_WEATHER_DOMAIN , area.getLat(), area.getLon(), openWeatherApiKey);
+                OPEN_WEATHER_DOMAIN , area.getLat(), area.getLon(), OPEN_WEATHER_API_KEY);
     }
+
 }

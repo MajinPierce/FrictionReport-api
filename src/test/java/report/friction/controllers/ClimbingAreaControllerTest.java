@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import report.friction.models.ClimbingAreaEntity;
 import report.friction.services.ClimbingAreaServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,6 +28,22 @@ class ClimbingAreaControllerTest {
 
     @MockBean
     private ClimbingAreaServiceImpl climbingAreaService;
+
+    @Test
+    public void getDefaultApiMessageShouldReturnResponse() throws Exception{
+        this.mockMvc.perform(get("/api")).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=utf-8"))
+                .andExpect(content().string("Friction.report API up and running"));
+    }
+
+    @Test
+    public void getDefaultApiMessageShouldReturnResponseAlternatePath() throws Exception{
+        this.mockMvc.perform(get("/api/")).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=utf-8"))
+                .andExpect(content().string("Friction.report API up and running"));
+    }
 
     @Test
     public void getClimbingAreaShouldReturnResponse() throws Exception {

@@ -21,10 +21,19 @@ public class ClimbingAreaController {
         this.climbingAreaService = climbingAreaService;
     };
 
+    @GetMapping(value={"", "/"})
+    public ResponseEntity<String> getDefaultApiMessage(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/plain; charset=utf-8");
+        headers.add("Allow", "GET");
+        String body = "Friction.report API up and running";
+        return new ResponseEntity<>(body, headers, HttpStatus.OK);
+    }
+
     //TODO implement mapstruct to customize response weather data properties
     // - many are unnecessary for api consumer
     @GetMapping("/{areaName}")
-    public ResponseEntity<ClimbingAreaEntity> getClimbingArea(@PathVariable String areaName){
+    public ResponseEntity<ClimbingAreaEntity> getClimbingAreaData(@PathVariable String areaName){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         headers.add("Allow", "GET");
