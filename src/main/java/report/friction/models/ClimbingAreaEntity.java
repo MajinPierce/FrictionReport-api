@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
-import report.friction.models.weather.CurrentWeather;
-import report.friction.models.weather.DailyWeather;
-import report.friction.models.weather.HourlyWeather;
+import report.friction.models.weather.*;
 
 import java.time.Instant;
 import java.util.List;
@@ -49,7 +47,10 @@ public class ClimbingAreaEntity {
     @JsonManagedReference
     @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<DailyWeather> dailyWeather;
-    //TODO add weather alerts
+    @JsonProperty("alerts")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<WeatherAlerts> weatherAlerts;
 
     @PreUpdate
     public void onUpdate() {
@@ -64,5 +65,10 @@ public class ClimbingAreaEntity {
     public void setDailyWeather(List<DailyWeather> dailyWeather) {
         this.dailyWeather.removeAll(this.dailyWeather);
         this.dailyWeather.addAll(dailyWeather);
+    }
+
+    public void setWeatherAlerts(List<WeatherAlerts> weatherAlerts) {
+        this.weatherAlerts.removeAll(this.weatherAlerts);
+        this.weatherAlerts.addAll(weatherAlerts);
     }
 }
