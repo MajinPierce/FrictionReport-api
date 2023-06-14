@@ -42,6 +42,6 @@ public class DailyWeather extends Weather {
     @JsonProperty("temp")
     private Map<String, Double> temperature;
     @JsonProperty("pop")
-    private Integer probabilityOfPrecipitation;
+    private Double probabilityOfPrecipitation;
 
 }
