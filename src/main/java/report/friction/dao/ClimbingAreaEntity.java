@@ -1,4 +1,4 @@
-package report.friction.models;
+package report.friction.dao;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
-import report.friction.models.weather.*;
+import report.friction.dao.weather.*;
 
 import java.time.Instant;
 import java.util.List;
@@ -19,7 +19,6 @@ public class ClimbingAreaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private Integer id;
     @JsonIgnore
     private String areaName;

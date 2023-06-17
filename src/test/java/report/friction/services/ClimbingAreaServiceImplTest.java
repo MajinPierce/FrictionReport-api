@@ -8,7 +8,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
 import report.friction.exceptions.AreaNotFoundException;
 
-import report.friction.models.ClimbingAreaEntity;
+import report.friction.dao.ClimbingAreaEntity;
 import report.friction.repositories.ClimbingAreaRepository;
 import java.time.Instant;
 

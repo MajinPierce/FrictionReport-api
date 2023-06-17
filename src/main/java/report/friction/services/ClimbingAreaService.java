@@ -1,6 +1,6 @@
 package report.friction.services;
 
-import report.friction.models.ClimbingAreaEntity;
+import report.friction.dao.ClimbingAreaEntity;
 
 public interface ClimbingAreaService {
 

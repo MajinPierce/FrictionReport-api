@@ -7,7 +7,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import report.friction.models.ClimbingAreaEntity;
+import report.friction.dao.ClimbingAreaEntity;
 import report.friction.repositories.ClimbingAreaRepository;
 
 import java.io.FileReader;
