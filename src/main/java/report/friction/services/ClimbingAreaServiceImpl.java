@@ -13,6 +13,9 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import report.friction.dto.ClimbingAreaDTO;
+import report.friction.dto.ClimbingAreaMapper;
+import report.friction.dto.ClimbingAreaMapperImpl;
 import report.friction.exceptions.AreaNotFoundException;
 import report.friction.exceptions.JacksonMappingException;
 import report.friction.exceptions.OpenWeatherException;
@@ -28,16 +31,18 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     private static final Long CACHING_TIMEOUT_SECONDS = (Long) 900L;
 
     private final ClimbingAreaRepository climbingAreaRepository;
+    private final ClimbingAreaMapper climbingAreaMapper;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    public ClimbingAreaServiceImpl(ClimbingAreaRepository climbingAreaRepository){
+    public ClimbingAreaServiceImpl(ClimbingAreaRepository climbingAreaRepository, ClimbingAreaMapperImpl climbingAreaMapper){
         this.climbingAreaRepository = climbingAreaRepository;
+        this.climbingAreaMapper = climbingAreaMapper;
     }
 
     @Override
-    public ClimbingAreaEntity getClimbingAreaData(String areaName)
+    public ClimbingAreaDTO getClimbingAreaData(String areaName)
             throws AreaNotFoundException, JacksonMappingException, OpenWeatherException{
         try {
             ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(
@@ -53,9 +58,9 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 area = objectMapper.readerForUpdating(area).readValue(response.body());
                 area.onUpdate();
-                return climbingAreaRepository.save(area);
+                return climbingAreaMapper.climbingAreaEntityToClimbingAreaDTO(climbingAreaRepository.save(area));
             } else {
-                return area;
+                return climbingAreaMapper.climbingAreaEntityToClimbingAreaDTO(area);
             }
         } catch (JsonProcessingException e){
             throw new JacksonMappingException("Error mapping OpenWeatherMap Api response to climbing area entity");

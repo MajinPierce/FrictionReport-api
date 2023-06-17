@@ -8,6 +8,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import report.friction.dao.ClimbingAreaEntity;
+import report.friction.dto.ClimbingAreaDTO;
 import report.friction.services.ClimbingAreaServiceImpl;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +47,7 @@ class ClimbingAreaControllerTest {
 
     @Test
     public void getClimbingAreaShouldReturnResponse() throws Exception {
-        when(climbingAreaService.getClimbingAreaData(any(String.class))).thenReturn(new ClimbingAreaEntity());
+        when(climbingAreaService.getClimbingAreaData(any(String.class))).thenReturn(new ClimbingAreaDTO());
         this.mockMvc.perform(get("/api/Leda")).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=utf-8"));

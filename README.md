@@ -10,8 +10,7 @@ Friction Report uses Java 17.0.4, Spring Boot 3.0, and Maven 3.8.4.
 
 # Front End
 
-The code for the Friction Report frontend is available [here](https://github.com/MajinPierce/FrictionReport-angular).
-I haven't started on that yet so it's pretty blank.
+The code for the Friction Report frontend is built using Angular and is available [here](https://github.com/MajinPierce/FrictionReport-angular).
 
 # Install and Run
 
@@ -25,16 +24,21 @@ There are a few environment variable that need to be set:
     * H2 database password
 
 I typically just set these via my environment variables in IntelliJ.
-I then either run the application directly or using
+
+Once the environment variables are set, you must run mvn install to generate the mapstruct dao -> dto mapping classes.
 ```
-mvn clean compile spring-boot:run
+mvn clean install compile -DskipTests
+```
+Once all classes are generated, you can run the application with maven or via the application context.
+```
+mvn spring-boot:run
 ```
 
 # Feedback / Contributions
 
 I welcome all feedback or code improvements. I do lots wrong and am always looking to learn.
 
-The [issue tracker](https://github.com/MajinPierce/FrictionReport-api/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
+The [issue tracker](https://github.com/MajinPierce/FrictionReport-api/issues) is the preferred channel for bug reports, features requests, and submitting pull requests.
 
 # Future Plans / Wishful Thinking
 
