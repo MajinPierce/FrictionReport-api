@@ -23,6 +23,8 @@ public class ClimbingAreaEntity {
     @JsonIgnore
     private String areaName;
     @JsonIgnore
+    private String fullName;
+    @JsonIgnore
     private String mountainProjectUrl;
     @JsonIgnore
     private String state;

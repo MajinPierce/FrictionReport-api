@@ -1,7 +1,8 @@
-package report.friction.dto;
+package report.friction.dto.weather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import report.friction.dto.weather.WeatherDescriptionDTO;
 
 import java.util.List;
 import java.util.Map;
