@@ -7,7 +7,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import report.friction.models.ClimbingAreaEntity;
+import report.friction.dao.ClimbingAreaEntity;
 import report.friction.services.ClimbingAreaServiceImpl;
 
 import static org.mockito.ArgumentMatchers.any;

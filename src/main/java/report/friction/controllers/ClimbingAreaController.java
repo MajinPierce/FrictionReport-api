@@ -5,7 +5,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import report.friction.models.ClimbingAreaEntity;
+import report.friction.dto.ClimbingAreaDTO;
+import report.friction.dto.ClimbingAreaMapper;
+import report.friction.dto.ClimbingAreaMapperImpl;
 import report.friction.services.ClimbingAreaService;
 import report.friction.services.ClimbingAreaServiceImpl;
 
@@ -15,10 +17,12 @@ import report.friction.services.ClimbingAreaServiceImpl;
 public class ClimbingAreaController {
 
     private final ClimbingAreaService climbingAreaService;
+    private final ClimbingAreaMapper climbingAreaMapper;
 
     @Autowired
-    public ClimbingAreaController(ClimbingAreaServiceImpl climbingAreaService){
+    public ClimbingAreaController(ClimbingAreaServiceImpl climbingAreaService, ClimbingAreaMapperImpl climbingAreaMapper){
         this.climbingAreaService = climbingAreaService;
+        this.climbingAreaMapper = climbingAreaMapper;
     }
 
     @GetMapping(value={"", "/"})
@@ -33,10 +37,12 @@ public class ClimbingAreaController {
     //TODO implement mapstruct to customize response weather data properties
     // - many are unnecessary for api consumer
     @GetMapping("/{areaName}")
-    public ResponseEntity<ClimbingAreaEntity> getClimbingAreaData(@PathVariable String areaName){
+    public ResponseEntity<ClimbingAreaDTO> getClimbingAreaData(@PathVariable String areaName){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         headers.add("Allow", "GET");
-        return new ResponseEntity<>(climbingAreaService.getClimbingAreaData(areaName), headers, HttpStatus.OK);
+        return new ResponseEntity<>(climbingAreaMapper.climbingAreaEntityToClimbingAreaDTO(
+                climbingAreaService.getClimbingAreaData(areaName)
+        ), headers, HttpStatus.OK);
     }
 }
