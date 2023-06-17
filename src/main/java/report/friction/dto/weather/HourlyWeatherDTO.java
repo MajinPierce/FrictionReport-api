@@ -1,4 +1,4 @@
-package report.friction.dto;
+package report.friction.dto.weather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

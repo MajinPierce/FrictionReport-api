@@ -10,9 +10,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import report.friction.dto.AreaInitDTO;
 import report.friction.dto.ClimbingAreaDTO;
 import report.friction.dto.ClimbingAreaMapper;
 import report.friction.dto.ClimbingAreaMapperImpl;
@@ -39,6 +41,10 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     public ClimbingAreaServiceImpl(ClimbingAreaRepository climbingAreaRepository, ClimbingAreaMapperImpl climbingAreaMapper){
         this.climbingAreaRepository = climbingAreaRepository;
         this.climbingAreaMapper = climbingAreaMapper;
+    }
+
+    public List<AreaInitDTO> getAreasInit(){
+        return climbingAreaMapper.climbingAreaEntityListToAreaInitDTOList(climbingAreaRepository.findAll());
     }
 
     @Override

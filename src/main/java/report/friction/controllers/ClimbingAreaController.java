@@ -5,11 +5,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import report.friction.dto.AreaInitDTO;
 import report.friction.dto.ClimbingAreaDTO;
 import report.friction.dto.ClimbingAreaMapper;
 import report.friction.dto.ClimbingAreaMapperImpl;
 import report.friction.services.ClimbingAreaService;
 import report.friction.services.ClimbingAreaServiceImpl;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +33,14 @@ public class ClimbingAreaController {
         headers.add("Allow", "GET");
         String body = "Friction.report API up and running";
         return new ResponseEntity<>(body, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/init")
+    public ResponseEntity<List<AreaInitDTO>>getAreasInit(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        headers.add("Allow", "GET");
+        return new ResponseEntity<>(climbingAreaService.getAreasInit(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/{areaName}")
