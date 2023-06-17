@@ -27,7 +27,7 @@ I typically just set these via my environment variables in IntelliJ.
 
 Once the environment variables are set, you must run mvn install to generate the mapstruct dao -> dto mapping classes.
 ```
-mvn clean install compile -DskipTests
+mvn clean compile install -DskipTests
 ```
 Once all classes are generated, you can run the application with maven or via the application context.
 ```
