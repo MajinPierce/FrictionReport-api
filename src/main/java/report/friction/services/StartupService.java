@@ -48,7 +48,7 @@ public class StartupService implements ApplicationListener<ApplicationReadyEvent
                 area.setMountainProjectUrl(mountainProjectUrl);
                 climbingAreaRepository.save(area);
                 System.out.println(String.format(
-                        "%s, %s | %f, %f | %s", areaName, state, latitude, longitude, mountainProjectUrl
+                        "%s, %s | %f, %f | %s", fullName, state, latitude, longitude, mountainProjectUrl
                 ));
             }
         } catch (Exception e) {
