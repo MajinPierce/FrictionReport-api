@@ -30,7 +30,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     @Value("${OPEN_WEATHER_API_KEY}")
     private String OPEN_WEATHER_API_KEY;
     private static final String OPEN_WEATHER_DOMAIN = "https://api.openweathermap.org/data/3.0/onecall?";
-    private static final Long CACHING_TIMEOUT_SECONDS = (Long) 900L;
+    private static final Long CACHING_TIMEOUT_SECONDS = 900L;
 
     private final ClimbingAreaRepository climbingAreaRepository;
     private final ClimbingAreaMapper climbingAreaMapper;
