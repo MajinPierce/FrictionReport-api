@@ -41,4 +41,9 @@ public interface ClimbingAreaMapper {
 
     @Mapping(source="areaName", target="name")
     AreaInitDTO climbingAreaEntityToAreaInitDTO(ClimbingAreaEntity climbingArea);
+
+    List<AreaMapDTO> climbingAreaEntityListToAreaMapDTOList(List<ClimbingAreaEntity> climbingAreaEntities);
+
+    @Mapping(source="areaName", target="name")
+    AreaMapDTO climbingAreaEntityToAreaMapDTO(ClimbingAreaEntity climbingArea);
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 import report.friction.dao.weather.*;
@@ -12,6 +13,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
+@EqualsAndHashCode(exclude={"currentWeather","hourlyWeather","dailyWeather", "weatherAlerts"})
 @Data
 @Table(name="climbing_area")
 @NoArgsConstructor
