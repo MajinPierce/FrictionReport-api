@@ -5,10 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import report.friction.dto.AreaInitDTO;
-import report.friction.dto.ClimbingAreaDTO;
-import report.friction.dto.ClimbingAreaMapper;
-import report.friction.dto.ClimbingAreaMapperImpl;
+import report.friction.dto.*;
 import report.friction.services.ClimbingAreaService;
 import report.friction.services.ClimbingAreaServiceImpl;
 
@@ -36,11 +33,19 @@ public class ClimbingAreaController {
     }
 
     @GetMapping("/init")
-    public ResponseEntity<List<AreaInitDTO>>getAreasInit(){
+    public ResponseEntity<List<AreaInitDTO>> getAreasInit(){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         headers.add("Allow", "GET");
         return new ResponseEntity<>(climbingAreaService.getAreasInit(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/map")
+    public ResponseEntity<List<AreaMapDTO>> getAreaMapData(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        headers.add("Allow", "GET");
+        return new ResponseEntity<>(climbingAreaService.getAreaMapData(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/{areaName}")

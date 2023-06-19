@@ -10,14 +10,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
+import java.util.Iterator;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import report.friction.dto.AreaInitDTO;
-import report.friction.dto.ClimbingAreaDTO;
-import report.friction.dto.ClimbingAreaMapper;
-import report.friction.dto.ClimbingAreaMapperImpl;
+import report.friction.dto.*;
 import report.friction.exceptions.AreaNotFoundException;
 import report.friction.exceptions.JacksonMappingException;
 import report.friction.exceptions.OpenWeatherException;
@@ -45,6 +43,15 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
     public List<AreaInitDTO> getAreasInit(){
         return climbingAreaMapper.climbingAreaEntityListToAreaInitDTOList(climbingAreaRepository.findAll());
+    }
+
+    public List<AreaMapDTO> getAreaMapData(){
+        List<ClimbingAreaEntity> allAreas = climbingAreaRepository.findAll();
+        allAreas.stream().filter(area -> (
+                area.getUpdatedAt() == null ||
+                        (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)))
+                .forEach(area -> updateAreaData(area));
+        return climbingAreaMapper.climbingAreaEntityListToAreaMapDTOList(allAreas);
     }
 
     @Override
@@ -80,6 +87,24 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
         //openWeatherApiKey set in env vars
         return String.format("%slat=%f&lon=%f&exclude=minutely&units=imperial&appid=%s",
                 OPEN_WEATHER_DOMAIN , area.getLat(), area.getLon(), OPEN_WEATHER_API_KEY);
+    }
+
+    private void updateAreaData(ClimbingAreaEntity area){
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder(
+                            URI.create(buildApiUrl(area)))
+                    .header("Content-Type", "application/json").build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            area = objectMapper.readerForUpdating(area).readValue(response.body());
+            area.onUpdate();
+            climbingAreaRepository.save(area);
+        } catch (JsonProcessingException e){
+            throw new JacksonMappingException("Error mapping OpenWeatherMap Api response to climbing area entity");
+        } catch (java.io.IOException | InterruptedException e){
+            Thread.currentThread().interrupt();
+            throw new OpenWeatherException("Error connecting to OpenWeatherMap Api");
+        }
     }
 
 }
