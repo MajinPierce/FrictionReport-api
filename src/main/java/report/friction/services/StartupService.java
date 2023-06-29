@@ -20,39 +20,33 @@ public class StartupService implements ApplicationListener<ApplicationReadyEvent
 
     private static final String CONFIG_FILE = "./src/main/resources/coordinates.config";
 
-    //TODO switch from csv to yaml or something
-    /**
-     * Initialize climbing area data (name and coordinates) based on config file.
-     * This data is then used to query weather info from open weather map.
-     * @param event     Application Ready Event
-     */
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        try (FileReader fileReader = new FileReader(CONFIG_FILE);
-             CSVReader csvReader = new CSVReader(fileReader);){
-
-            String[] nextRecord;
-            while ((nextRecord = csvReader.readNext()) != null) {
-                ClimbingAreaEntity area = new ClimbingAreaEntity();
-                String areaName = nextRecord[0];
-                String fullName = nextRecord[1];
-                String state = nextRecord[2];
-                Double latitude = Double.parseDouble(nextRecord[3]);
-                Double longitude = Double.parseDouble(nextRecord[4]);
-                String mountainProjectUrl = nextRecord[5];
-                area.setAreaName(areaName);
-                area.setFullName(fullName);
-                area.setState(state);
-                area.setLat(latitude);
-                area.setLon(longitude);
-                area.setMountainProjectUrl(mountainProjectUrl);
-                climbingAreaRepository.save(area);
-                System.out.println(String.format(
-                        "%s, %s | %f, %f | %s", fullName, state, latitude, longitude, mountainProjectUrl
-                ));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try (FileReader fileReader = new FileReader(CONFIG_FILE);
+//             CSVReader csvReader = new CSVReader(fileReader);){
+//
+//            String[] nextRecord;
+//            while ((nextRecord = csvReader.readNext()) != null) {
+//                ClimbingAreaEntity area = new ClimbingAreaEntity();
+//                String areaName = nextRecord[0];
+//                String fullName = nextRecord[1];
+//                String state = nextRecord[2];
+//                Double latitude = Double.parseDouble(nextRecord[3]);
+//                Double longitude = Double.parseDouble(nextRecord[4]);
+//                String mountainProjectUrl = nextRecord[5];
+//                area.setAreaName(areaName);
+//                area.setFullName(fullName);
+//                area.setState(state);
+//                area.setLat(latitude);
+//                area.setLon(longitude);
+//                area.setMountainProjectUrl(mountainProjectUrl);
+//                climbingAreaRepository.save(area);
+//                System.out.println(String.format(
+//                        "%s, %s | %f, %f | %s", fullName, state, latitude, longitude, mountainProjectUrl
+//                ));
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }
