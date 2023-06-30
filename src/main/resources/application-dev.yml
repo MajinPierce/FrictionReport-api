@@ -2,23 +2,27 @@ server:
   port: 9090
 
 api:
-  key:
-    ${OPEN_WEATHER_API_KEY}
+  key: ${OPEN_WEATHER_API_KEY}
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: 'logs/friction-report/friction-report.log'
 
 spring:
   datasource:
-    url:
-      jdbc:h2:mem:areadb
-    driverClassName:
-      org.h2.Driver
-    username:
-      ${H2_USERNAME}
-    password:
-      ${H2_PASSWORD}
+    platform: h2
+    url: jdbc:h2:mem:areadb;DATABASE_TO_UPPER=false
+    driverClassName: org.h2.Driver
+    username: ${H2_USERNAME}
+    password: ${H2_PASSWORD}
+  h2:
+    console:
+      enabled: true
   jpa:
-    database-platform:
-      org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
-        globally_quoted_identifiers:
-          true
+        globally_quoted_identifiers: true
+    defer-datasource-initialization: true
