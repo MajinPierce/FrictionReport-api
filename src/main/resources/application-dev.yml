@@ -8,7 +8,7 @@ logging:
   level:
     root: INFO
   file:
-    name: 'logs/friction-report/friction-report.log'
+    name: '/logs/friction-report/friction-report.log'
 
 spring:
   datasource:
@@ -20,6 +20,8 @@ spring:
   h2:
     console:
       enabled: true
+      settings:
+        web-allow-others: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
