@@ -9,4 +9,4 @@ services:
       H2_PASSWORD: ${H2_PASSWORD}
     build: .
     ports:
-      - "8080:9090"
+      - "8080:8080"
