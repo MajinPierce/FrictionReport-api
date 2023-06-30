@@ -4,6 +4,12 @@ server:
 api:
   key: ${OPEN_WEATHER_API_KEY}
 
+logging:
+  level:
+    root: INFO
+  file:
+    name: 'logs/friction-report/friction-report.log'
+
 spring:
   datasource:
     platform: h2
