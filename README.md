@@ -44,7 +44,7 @@ Alternatively, you can run the application with docker. The environment variable
 
 Once the environment variables are set, build and run the container.
 ```
-docker compose up
+docker-compose up
 ```
 
 # Feedback / Contributions
