@@ -46,6 +46,7 @@ Once the environment variables are set, build and run the container.
 ```
 docker-compose up
 ```
+*Note: If you are running your docker container on an m-series chipset mac, you will need to change the maven and java build profiles in the dockerfile from alpine to non alpine
 
 # Feedback / Contributions
 
