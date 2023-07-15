@@ -1,12 +1,15 @@
+version: '1.0'
 services:
-  web:
-    container_name: friction_report_api
-    image: eclipse-temurin:17-jdk-alpine
+  api:
+    container_name: friction-report-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: on-failure
     environment:
       OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       H2_USERNAME: ${H2_USERNAME}
       H2_PASSWORD: ${H2_PASSWORD}
-    build: .
     ports:
-      - "8080:8080"
+      - 8080:8080
