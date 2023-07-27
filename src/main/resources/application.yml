@@ -20,9 +20,33 @@ spring:
   h2:
     console:
       enabled: false
+      settings:
+        web-allow-others: false
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
         globally_quoted_identifiers: true
     defer-datasource-initialization: true
+---
+spring:
+  profiles:
+    active: dev
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  main:
+    banner-mode: on
+---
+spring:
+  profiles:
+    active: prod
+  h2:
+    console:
+      enabled: false
+      settings:
+        web-allow-others: false
+  main:
+    banner-mode: off
