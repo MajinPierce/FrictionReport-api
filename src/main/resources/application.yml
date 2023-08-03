@@ -2,7 +2,7 @@ server:
   port: 8080
 
 openweather:
-  domain: https://api.openweathermap.org/data/3.0/onecall?
+  domain: https://api.openweathermap.org/data/3.0/onecall
   apiKey: ${OPEN_WEATHER_API_KEY}
   units:  imperial
 

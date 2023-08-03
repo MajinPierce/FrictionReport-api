@@ -27,9 +27,6 @@ import report.friction.repositories.ClimbingAreaRepository;
 @Service
 public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
-    @Value("${OPEN_WEATHER_API_KEY}")
-    private String OPEN_WEATHER_API_KEY;
-    private static final String OPEN_WEATHER_DOMAIN = "https://api.openweathermap.org/data/3.0/onecall?";
     private static final Long CACHING_TIMEOUT_SECONDS = 900L;
 
     private final ClimbingAreaRepository climbingAreaRepository;
@@ -91,13 +88,6 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
             Thread.currentThread().interrupt();
             throw new OpenWeatherException("Error connecting to OpenWeatherMap Api");
         }
-    }
-
-    private String buildApiUrl(ClimbingAreaEntity area){
-        //openWeatherApiKey set in env vars
-        log.debug("Creating open weather map api url for {}", area.getFullName());
-        return String.format("%slat=%f&lon=%f&exclude=minutely&units=imperial&appid=%s",
-                OPEN_WEATHER_DOMAIN , area.getLat(), area.getLon(), OPEN_WEATHER_API_KEY);
     }
 
     private void updateAreaData(ClimbingAreaEntity area){

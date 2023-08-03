@@ -9,6 +9,8 @@ public class OpenWeatherRequest {
     private Double longitude;
     private String units;
     private String apiKey;
+    private String subAPI;
+    private String exclude;
 
     private OpenWeatherRequest(OpenWeatherRequestBuilder builder){
         this.domain = builder.domain;
@@ -16,60 +18,62 @@ public class OpenWeatherRequest {
         this.units = builder.units;
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
+        this.subAPI = builder.subAPI;
+        this.exclude = builder.exclude;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public void setLatitudeLongitude(ClimbingAreaEntity area){
-        this.latitude = area.getLat();
-        this.longitude = area.getLon();
-    }
-
-    public static OpenWeatherRequestBuilder newRequest(ClimbingAreaEntity area){
-        return new OpenWeatherRequestBuilder(area);
+    public static OpenWeatherRequestBuilder newRequest(){
+        return new OpenWeatherRequestBuilder();
     }
 
     @Override
     public String toString() {
-        return String.format("%slat=%f&lon=%f&exclude=minutely&units=%s&appid=%s",
-                domain , latitude, longitude, units, apiKey);
+        return String.format("%s?%slat=%f&lon=%f%s%s&appid=%s",
+                domain, subAPI, latitude, longitude, exclude, units, apiKey);
     }
 
     public static class OpenWeatherRequestBuilder {
 
-        public String domain = OpenWeatherRequestConfig.domain;
-        public String apiKey = OpenWeatherRequestConfig.apiKey;
+        public static final String domain = OpenWeatherRequestConfig.domain;
+        public static final String apiKey = OpenWeatherRequestConfig.apiKey;
         private String units = OpenWeatherRequestConfig.units;
         private Double latitude;
         private Double longitude;
+        private String subAPI;
+        private String exclude = "";
+        private String dt = "";
+        private String date = "";
 
-        public OpenWeatherRequestBuilder(ClimbingAreaEntity area){
-            this.latitude = area.getLat();
-            this.longitude = area.getLon();
+
+        public OnecallRequestBuilder onecall() {
+            return new OnecallRequestBuilder();
         }
 
-        public void isMetric(){
-            this.units = "metric";
+        public TimemachineRequestBuilder timemachine() {
+            return new TimemachineRequestBuilder();
         }
 
-        public void isImperial(){
-            this.units = "imperial";
+        public DaySummaryRequestBuilder daySummary() {
+            return new DaySummaryRequestBuilder();
         }
 
+//        public OpenWeatherRequestBuilder(ClimbingAreaEntity area){
+//            this.latitude = area.getLat();
+//            this.longitude = area.getLon();
+//        }
+//
+//        public void metric(){
+//            this.units = "&units=metric";
+//        }
+//
+//        public void imperial(){
+//            this.units = "&units=imperial";
+//        }
+//
+//        public void exclude(String exclusion){
+//            this.exclude = "&exclude=" + exclusion;
+//        }
+//
         public OpenWeatherRequest build() {
             return new OpenWeatherRequest(this);
         }
@@ -78,5 +82,46 @@ public class OpenWeatherRequest {
             return new OpenWeatherRequest(this).toString();
         }
 
+        private static class OnecallRequestBuilder extends OpenWeatherRequestBuilder {
+
+            private Double latitude;
+            private Double longitude;
+            private String subAPI = "?";
+            private String exclude = "";
+            private String units;
+
+            public OnecallRequestBuilder() {}
+
+            public OpenWeatherRequest build() {
+                return new OpenWeatherRequest(this);
+            }
+
+        }
+
+        private static class TimemachineRequestBuilder extends OpenWeatherRequestBuilder {
+
+            private Double latitude;
+            private Double longitude;
+            private String subAPI = "/timemachine?";
+            private String units;
+            private Integer dt;
+
+            public OpenWeatherRequest build() {
+                return new OpenWeatherRequest(this);
+            }
+        }
+
+        private static class DaySummaryRequestBuilder extends OpenWeatherRequestBuilder {
+
+            private Double latitude;
+            private Double longitude;
+            private String subAPI = "/day_summary?";
+            private String units;
+            private String date;
+
+            public OpenWeatherRequest build() {
+                return new OpenWeatherRequest(this);
+            }
+        }
     }
 }
