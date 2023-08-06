@@ -12,6 +12,16 @@ logging:
   file:
     name: '/logs/friction-report/friction-report.log'
 
+management:
+  endpoint:
+    health:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health
+
 spring:
   datasource:
     platform: h2
@@ -32,23 +42,31 @@ spring:
     defer-datasource-initialization: true
 ---
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
   h2:
     console:
       enabled: true
       settings:
         web-allow-others: true
-  main:
-    banner-mode: on
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+api:
+  key: ${OPEN_WEATHER_API_KEY}
 ---
 spring:
-  profiles:
-    active: prod
-  h2:
-    console:
-      enabled: false
-      settings:
-        web-allow-others: false
+  config:
+    activate:
+      on-profile: prod
   main:
-    banner-mode: off
+    banner-mode: on
+
+api:
+  key: ${OPEN_WEATHER_API_KEY}
