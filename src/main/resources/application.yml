@@ -1,14 +1,21 @@
 server:
   port: 8080
 
-api:
-  key: ${OPEN_WEATHER_API_KEY}
-
 logging:
   level:
     root: INFO
   file:
     name: '/logs/friction-report/friction-report.log'
+
+management:
+  endpoint:
+    health:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health
 
 spring:
   datasource:
@@ -26,3 +33,31 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
     defer-datasource-initialization: true
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+api:
+  key: ${OPEN_WEATHER_API_KEY}
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+api:
+  key: ${OPEN_WEATHER_API_KEY}
