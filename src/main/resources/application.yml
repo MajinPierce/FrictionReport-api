@@ -62,11 +62,15 @@ api:
   key: ${OPEN_WEATHER_API_KEY}
 ---
 spring:
+  aws:
+    secretsmanager:
+      secretName: friction-report-api-secrets
+      region: us-east-1
+      endpoint: secretsmanager.us-east-1.amazonaws.com
   config:
     activate:
       on-profile: prod
   main:
-    banner-mode: on
+    banner-mode: false
 
-api:
-  key: ${OPEN_WEATHER_API_KEY}
+
