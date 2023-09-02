@@ -69,7 +69,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
             }
             if(area.getUpdatedAt() == null || (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)){
                 HttpRequest request = HttpRequest.newBuilder(
-                                URI.create(OpenWeatherRequest.newRequest(area).buildString()))
+                                URI.create(One.onecall().buildString()))
                         .header("Content-Type", "application/json").build();
                 log.info("Sending open weather map request to url: {}", request.uri().toString().replaceAll("(?<=&appid=).*", "OPEN_WEATHER_API_KEY"));
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -84,7 +84,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
             log.error(String.valueOf(e));
             throw new JacksonMappingException("Error mapping OpenWeatherMap Api response to climbing area entity");
         } catch (java.io.IOException | InterruptedException e){
-            log.error(String.valueOf(e));
+            log.error("Error connecting to OpenWeatherMap Api", e);
             Thread.currentThread().interrupt();
             throw new OpenWeatherException("Error connecting to OpenWeatherMap Api");
         }

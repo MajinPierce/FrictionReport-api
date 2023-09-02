@@ -24,7 +24,6 @@ management:
 
 spring:
   datasource:
-    platform: h2
     url: jdbc:h2:mem:areadb;DATABASE_TO_UPPER=false
     driverClassName: org.h2.Driver
     username: ${H2_USERNAME}
@@ -40,6 +39,9 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
     defer-datasource-initialization: true
+  sql:
+    init:
+      platform: h2
 ---
 spring:
   config:
@@ -62,14 +64,10 @@ api:
   key: ${OPEN_WEATHER_API_KEY}
 ---
 spring:
-  aws:
-    secretsmanager:
-      secretName: friction-report-api-secrets
-      region: us-east-1
-      endpoint: secretsmanager.us-east-1.amazonaws.com
   config:
     activate:
       on-profile: prod
+    import: aws-secretsmanager:friction-report-api-secrets
   main:
     banner-mode: false
 
