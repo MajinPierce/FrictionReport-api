@@ -110,5 +110,4 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
             throw new OpenWeatherException("Error connecting to OpenWeatherMap Api");
         }
     }
-
 }
