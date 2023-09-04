@@ -2,7 +2,7 @@ package report.friction.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import report.friction.dao.ClimbingAreaEntity;
+import report.friction.entities.ClimbingAreaEntity;
 
 import java.util.List;
 

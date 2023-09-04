@@ -1,6 +1,11 @@
 server:
   port: 8080
 
+openweather:
+  domain: https://api.openweathermap.org/data/3.0/onecall
+  apiKey: ${OPEN_WEATHER_API_KEY}
+  units:  imperial
+
 logging:
   level:
     root: INFO
@@ -19,7 +24,6 @@ management:
 
 spring:
   datasource:
-    platform: h2
     url: jdbc:h2:mem:areadb;DATABASE_TO_UPPER=false
     driverClassName: org.h2.Driver
     username: ${H2_USERNAME}
@@ -27,17 +31,47 @@ spring:
   h2:
     console:
       enabled: false
+      settings:
+        web-allow-others: false
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
         globally_quoted_identifiers: true
     defer-datasource-initialization: true
+  sql:
+    init:
+      platform: h2
 ---
+#LOCAL
+spring:
+  config:
+    activate:
+      on-profile: local
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+logging:
+  level:
+    root: debug
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+---
+#DEV
 spring:
   config:
     activate:
       on-profile: dev
+    import: aws-secretsmanager:friction-report-api-secrets
   h2:
     console:
       enabled: true
@@ -51,13 +85,14 @@ management:
       exposure:
         include: '*'
 
-api:
-  key: ${OPEN_WEATHER_API_KEY}
 ---
+#PROD
 spring:
   config:
     activate:
       on-profile: prod
+    import: aws-secretsmanager:friction-report-api-secrets
+  main:
+    banner-mode: false
 
-api:
-  key: ${OPEN_WEATHER_API_KEY}
+
