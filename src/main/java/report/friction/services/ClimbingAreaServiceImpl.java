@@ -3,7 +3,6 @@ package report.friction.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -16,7 +15,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import report.friction.dto.*;
-import report.friction.entities.OpenWeatherRequest;
+import report.friction.models.Exclude;
+import report.friction.models.OpenWeatherRequest;
 import report.friction.exceptions.AreaNotFoundException;
 import report.friction.exceptions.JacksonMappingException;
 import report.friction.exceptions.OpenWeatherException;
@@ -69,7 +69,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
             }
             if(area.getUpdatedAt() == null || (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)){
                 HttpRequest request = HttpRequest.newBuilder(
-                                URI.create(One.onecall().buildString()))
+                                URI.create(OpenWeatherRequest.newRequest(area).onecall().exclude(Exclude.MINUTELY).build()))
                         .header("Content-Type", "application/json").build();
                 log.info("Sending open weather map request to url: {}", request.uri().toString().replaceAll("(?<=&appid=).*", "OPEN_WEATHER_API_KEY"));
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -93,7 +93,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     private void updateAreaData(ClimbingAreaEntity area){
         try {
             HttpRequest request = HttpRequest.newBuilder(
-                            URI.create(OpenWeatherRequest.newRequest(area).buildString()))
+                            URI.create(OpenWeatherRequest.newRequest(area).onecall().exclude(Exclude.MINUTELY).build()))
                     .header("Content-Type", "application/json").build();
             log.info("Sending open weather map request to url: {}", request.uri().toString().replaceAll("(?<=&appid=).*", "OPEN_WEATHER_API_KEY"));
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

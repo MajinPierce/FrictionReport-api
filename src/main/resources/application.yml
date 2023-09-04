@@ -43,10 +43,35 @@ spring:
     init:
       platform: h2
 ---
+#LOCAL
+spring:
+  config:
+    activate:
+      on-profile: local
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+logging:
+  level:
+    root: debug
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+---
+#DEV
 spring:
   config:
     activate:
       on-profile: dev
+    import: aws-secretsmanager:friction-report-api-secrets
   h2:
     console:
       enabled: true
@@ -60,9 +85,8 @@ management:
       exposure:
         include: '*'
 
-api:
-  key: ${OPEN_WEATHER_API_KEY}
 ---
+#PROD
 spring:
   config:
     activate:
