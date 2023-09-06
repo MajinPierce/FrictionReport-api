@@ -1,4 +1,4 @@
-package report.friction.dao.weather;
+package report.friction.entities.weather;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;

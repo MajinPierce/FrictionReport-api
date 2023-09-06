@@ -2,11 +2,11 @@ package report.friction.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import report.friction.dao.ClimbingAreaEntity;
-import report.friction.dao.weather.CurrentWeather;
-import report.friction.dao.weather.DailyWeather;
-import report.friction.dao.weather.HourlyWeather;
-import report.friction.dao.weather.WeatherDescription;
+import report.friction.entities.ClimbingAreaEntity;
+import report.friction.entities.weather.CurrentWeather;
+import report.friction.entities.weather.DailyWeather;
+import report.friction.entities.weather.HourlyWeather;
+import report.friction.entities.weather.WeatherDescription;
 import report.friction.dto.weather.CurrentWeatherDTO;
 import report.friction.dto.weather.DailyWeatherDTO;
 import report.friction.dto.weather.HourlyWeatherDTO;

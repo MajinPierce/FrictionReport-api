@@ -1,11 +1,11 @@
-package report.friction.dao.weather;
+package report.friction.entities.weather;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import report.friction.dao.ClimbingAreaEntity;
+import report.friction.entities.ClimbingAreaEntity;
 
 import java.util.List;
 
