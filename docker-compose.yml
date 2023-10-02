@@ -45,4 +45,4 @@ services:
       AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: "/creds"
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     ports:
-      - 8080:8080
+      - "8080:8080"
