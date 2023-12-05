@@ -9,8 +9,6 @@ openweather:
 logging:
   level:
     root: INFO
-  file:
-    name: '/logs/friction-report/friction-report.log'
 
 management:
   endpoint:
@@ -34,7 +32,6 @@ spring:
       settings:
         web-allow-others: false
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
         globally_quoted_identifiers: true
@@ -42,6 +39,7 @@ spring:
   sql:
     init:
       platform: h2
+
 ---
 #LOCAL
 spring:
@@ -71,7 +69,7 @@ spring:
   config:
     activate:
       on-profile: dev
-    import: aws-secretsmanager:friction-report-api-secrets
+    import: optional:aws-secretsmanager:friction-report-api-secrets
   h2:
     console:
       enabled: true
@@ -92,7 +90,3 @@ spring:
     activate:
       on-profile: prod
     import: aws-secretsmanager:friction-report-api-secrets
-  main:
-    banner-mode: false
-
-
