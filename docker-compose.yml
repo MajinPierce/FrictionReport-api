@@ -1,15 +1,13 @@
-version: '1.0'
+version: "1.0"
 services:
-  api:
+  app:
     container_name: friction-report-api
+    image: friction-report-api
     build:
-      context: ./
-      dockerfile: Dockerfile
-    restart: on-failure
-    environment:
-      OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      H2_USERNAME: ${H2_USERNAME}
-      H2_PASSWORD: ${H2_PASSWORD}
+      context: .
     ports:
       - 8080:8080
+    environment:
+      PORT: "8080"
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      AWS_REGION: ${AWS_REGION}
