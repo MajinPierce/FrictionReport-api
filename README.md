@@ -1,18 +1,20 @@
 # Friction Report API
 
-This is the backend API for [Friction Report](https://friction.report). I was jealous of [Sendex](sendex.report), and wanted to make my own climbing weather report for areas a bit closer to home.
+This is the backend API for [Friction Report](https://friction.report). It is currently running at [https://api.friction.report](https://api.friction.report) I was jealous of [Sendex](sendex.report), and wanted to make my own climbing weather report for areas a bit closer to home.
 
 Keep in mind this is partially just for myself (and maybe some friends) to use, and partially to learn/practice.
 
 This application uses OpenWeatherMap's OneCall API for the weather data.
 
-Friction Report uses Java 17.0, Spring Boot 3.1, and Maven 3.8.
+Friction Report uses Java 17.0, Spring Boot 3.2, and Maven 3.8.
 
 # Front End
 
 The code for the Friction Report frontend is built using Angular and is available [here](https://github.com/MajinPierce/FrictionReport-angular).
 
 # Install and Run
+
+For both the maven and docker runtimes, if you intend to use environment variables stored in AWS secrets manager, you will have to install aws cli and set up your profile locally. Then you can run the application in dev or prod modes and it will pull down the envrionment variables. The docker-compose.override.yml is configuration that allows a local container to use an aws cli profile.
 
 ## Maven
 
@@ -31,7 +33,7 @@ I typically just set these via my environment variables in IntelliJ.
 
 Once the environment variables are set, you must run mvn install to generate the mapstruct dao -> dto mapping classes.
 ```
-mvn clean install -DskipTests
+mvn clean install
 ```
 Once all classes are generated, you can run the application with maven or via the application context.
 ```
@@ -56,6 +58,7 @@ The [issue tracker](https://github.com/MajinPierce/FrictionReport-api/issues) is
 
 # Future Plans / Wishful Thinking
 
+* Refactor service layer and write unit tests now that I know better
 * Total precipitation over the last x day/hours so that you can better judge rock conditions
 * Come up with a better formula for the sendex that explicitly takes into account precipitation
   * Would help establish what a good score actually is other than a vague ~100 is good
