@@ -20,24 +20,28 @@ import java.util.List;
 public interface ClimbingAreaMapper {
 
     @Mapping(source="areaName", target="name")
-    ClimbingAreaDTO climbingAreaEntityToClimbingAreaDTO(ClimbingAreaEntity climbingArea);
+    @Mapping(source="currentWeather", target="current")
+    @Mapping(source="hourlyWeather", target="hourly")
+    @Mapping(source="dailyWeather", target="daily")
+    ClimbingAreaDTO climbingAreaEntityToDTO(ClimbingAreaEntity climbingArea);
 
-    CurrentWeatherDTO currentWeatherToCurrentWeatherDTO(CurrentWeather currentWeather);
+    CurrentWeatherDTO currentWeatherToDTO(CurrentWeather currentWeather);
 
-    List<HourlyWeatherDTO> hourlyListToHourlyDTOList(List<HourlyWeather> hourlyWeather);
+    List<HourlyWeatherDTO> hourlyListToDTO(List<HourlyWeather> hourlyWeather);
 
-    HourlyWeatherDTO hourlyWeatherToHourlyWeatherDTO(HourlyWeather hourlyWeather);
+    HourlyWeatherDTO hourlyWeatherToDTO(HourlyWeather hourlyWeather);
 
-    List<DailyWeatherDTO> dailyListToDailyDTOList(List<DailyWeather> dailyWeather);
+    List<DailyWeatherDTO> dailyListToDailyDTO(List<DailyWeather> dailyWeather);
 
     @Mapping(source="probabilityOfPrecipitation", target="pop")
-    DailyWeatherDTO dailyWeatherToDailyWeatherDTO(DailyWeather dailyWeather);
+    @Mapping(source="weatherDescription", target="weather")
+    DailyWeatherDTO dailyWeatherToDTO(DailyWeather dailyWeather);
 
-    List<WeatherDescriptionDTO> weatherDescriptionToWeatherDescriptionDTOList(List<WeatherDescription> weatherDescription);
+    List<WeatherDescriptionDTO> weatherDescriptionListToDTO(List<WeatherDescription> weatherDescription);
 
-    WeatherDescriptionDTO weatherDescriptionToWeatherDescriptionDTO(WeatherDescription weatherDescription);
+    WeatherDescriptionDTO weatherDescriptionToDTO(WeatherDescription weatherDescription);
 
-    List<AreaInitDTO> climbingAreaEntityListToAreaInitDTOList(List<ClimbingAreaEntity> climbingAreaEntities);
+    List<AreaInitDTO> climbingAreaEntityListToDTO(List<ClimbingAreaEntity> climbingAreaEntities);
 
     @Mapping(source="areaName", target="name")
     AreaInitDTO climbingAreaEntityToAreaInitDTO(ClimbingAreaEntity climbingArea);

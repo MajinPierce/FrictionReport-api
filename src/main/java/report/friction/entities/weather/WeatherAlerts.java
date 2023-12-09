@@ -3,6 +3,7 @@ package report.friction.entities.weather;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import report.friction.entities.ClimbingAreaEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class WeatherAlerts {
 
     @Id

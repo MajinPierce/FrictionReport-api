@@ -13,6 +13,7 @@ public class OpenWeatherRequestConfig {
     public static String apiKey;
     public static String units;
 
+    //TODO: I don't like this weird value injection I did
     @Value("${openweather.domain}")
     private void setDomain(String domain) {
         OpenWeatherRequestConfig.domain = domain;

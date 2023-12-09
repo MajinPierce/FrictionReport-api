@@ -6,9 +6,20 @@ openweather:
   apiKey: ${OPEN_WEATHER_API_KEY}
   units:  imperial
 
+friction-report:
+  url:
+    prod: https://api.friction.report
+    dev: http://localhost:8080
+
 logging:
   level:
     root: INFO
+
+springdoc:
+  swagger-ui:
+    default-models-expand-depth: -1
+  show-actuator: true
+  paths-to-exclude: /climbingAreaEntities, /climbingAreaEntities/*, /climbingAreaEntities/search/*, /profile, /profile/*
 
 management:
   endpoint:
@@ -69,7 +80,11 @@ spring:
   config:
     activate:
       on-profile: dev
-    import: optional:aws-secretsmanager:friction-report-api-secrets
+    import: aws-secretsmanager:friction-report-api-secrets
+  cloud:
+    aws:
+      cloudwatch:
+        region: us-east-1
   h2:
     console:
       enabled: true
@@ -90,3 +105,7 @@ spring:
     activate:
       on-profile: prod
     import: aws-secretsmanager:friction-report-api-secrets
+  cloud:
+    aws:
+      cloudwatch:
+        region: us-east-1

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @Data
 @Table(name="climbing_area")
 @NoArgsConstructor
+@AllArgsConstructor
 public class ClimbingAreaEntity {
 
     @Id
@@ -61,17 +63,17 @@ public class ClimbingAreaEntity {
     }
 
     public void setHourlyWeather(List<HourlyWeather> hourlyWeather) {
-        this.hourlyWeather.removeAll(this.hourlyWeather);
+        this.hourlyWeather.clear();
         this.hourlyWeather.addAll(hourlyWeather);
     }
 
     public void setDailyWeather(List<DailyWeather> dailyWeather) {
-        this.dailyWeather.removeAll(this.dailyWeather);
+        this.dailyWeather.clear();
         this.dailyWeather.addAll(dailyWeather);
     }
 
     public void setWeatherAlerts(List<WeatherAlerts> weatherAlerts) {
-        this.weatherAlerts.removeAll(this.weatherAlerts);
+        this.weatherAlerts.clear();
         this.weatherAlerts.addAll(weatherAlerts);
     }
 }

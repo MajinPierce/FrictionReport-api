@@ -5,13 +5,13 @@ import report.friction.entities.ClimbingAreaEntity;
 
 public class OpenWeatherRequest {
 
-    private String domain;
-    private Double latitude;
-    private Double longitude;
-    private String units;
-    private String apiKey;
-    private String subAPI;
-    private String exclude;
+    private final String domain;
+    private final Double latitude;
+    private final Double longitude;
+    private final String units;
+    private final String apiKey;
+    private final String subAPI;
+    private final String exclude;
 
     public OpenWeatherRequest(OpenWeatherRequestBuilder builder){
         this.domain = builder.domain;
@@ -33,6 +33,7 @@ public class OpenWeatherRequest {
                 domain, subAPI, latitude, longitude, exclude, units, apiKey);
     }
 
+    //TODO: Redo this builder
     public static class OpenWeatherRequestBuilder {
 
         public static final String domain = OpenWeatherRequestConfig.domain;
