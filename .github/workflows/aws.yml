@@ -41,6 +41,7 @@ env:
                                                       # containerDefinitions section of your task definition
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
