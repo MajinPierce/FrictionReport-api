@@ -2,7 +2,6 @@ package report.friction.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -17,9 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import report.friction.dto.*;
 import report.friction.models.Exclude;
 import report.friction.models.OpenWeatherRequest;
-import report.friction.exceptions.AreaNotFoundException;
-import report.friction.exceptions.JacksonMappingException;
-import report.friction.exceptions.OpenWeatherException;
+import report.friction.exceptions.custom.AreaNotFoundException;
+import report.friction.exceptions.custom.JacksonMappingException;
+import report.friction.exceptions.custom.OpenWeatherException;
 import report.friction.entities.ClimbingAreaEntity;
 import report.friction.repositories.ClimbingAreaRepository;
 
@@ -35,7 +34,6 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Autowired
     public ClimbingAreaServiceImpl(ClimbingAreaRepository climbingAreaRepository, ClimbingAreaMapperImpl climbingAreaMapper, HttpClient client){
         this.climbingAreaRepository = climbingAreaRepository;
         this.climbingAreaMapper = climbingAreaMapper;
@@ -44,7 +42,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
 
     public List<AreaInitDTO> getAreasInit(){
         log.debug("Getting area init data");
-        return climbingAreaMapper.climbingAreaEntityListToAreaInitDTOList(climbingAreaRepository.findAll());
+        return climbingAreaMapper.climbingAreaEntityListToDTO(climbingAreaRepository.findAll());
     }
 
     public List<AreaMapDTO> getAreaMapData(){
@@ -76,9 +74,9 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
                 area = objectMapper.readerForUpdating(area).readValue(response.body());
                 area.onUpdate();
                 log.debug("Updating data for area: {}", area.getFullName());
-                return climbingAreaMapper.climbingAreaEntityToClimbingAreaDTO(climbingAreaRepository.save(area));
+                return climbingAreaMapper.climbingAreaEntityToDTO(climbingAreaRepository.save(area));
             } else {
-                return climbingAreaMapper.climbingAreaEntityToClimbingAreaDTO(area);
+                return climbingAreaMapper.climbingAreaEntityToDTO(area);
             }
         } catch (JsonProcessingException e){
             log.error(String.valueOf(e));

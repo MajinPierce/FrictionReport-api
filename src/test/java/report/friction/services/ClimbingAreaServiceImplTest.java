@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.TestPropertySource;
-import report.friction.exceptions.AreaNotFoundException;
+import report.friction.exceptions.custom.AreaNotFoundException;
 
 import report.friction.entities.ClimbingAreaEntity;
 import report.friction.repositories.ClimbingAreaRepository;

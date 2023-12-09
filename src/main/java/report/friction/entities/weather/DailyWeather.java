@@ -3,6 +3,7 @@ package report.friction.entities.weather;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class DailyWeather extends Weather {
 
     @ManyToOne

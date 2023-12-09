@@ -1,8 +1,8 @@
 package report.friction.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import report.friction.dto.*;
@@ -12,47 +12,57 @@ import report.friction.services.ClimbingAreaServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin
+@Tag(name="Climbing Area Controller")
 public class ClimbingAreaController {
 
     private final ClimbingAreaService climbingAreaService;
 
-    @Autowired
     public ClimbingAreaController(ClimbingAreaServiceImpl climbingAreaService){
         this.climbingAreaService = climbingAreaService;
     }
 
+    @Operation(
+            summary = "Root path",
+            description = "Returns a generic message on if the service is running."
+    )
     @GetMapping(value={"", "/"})
     public ResponseEntity<String> getDefaultApiMessage(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "text/plain; charset=utf-8");
-        headers.add("Allow", "GET");
-        String body = "Friction.report API up and running";
-        return new ResponseEntity<>(body, headers, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_PLAIN)
+                .body("friction.report API up and running");
     }
 
+    @Operation(
+            summary = "Initialize Area Information",
+            description = "Returns the basic information for all climbing areas needed to initialize the frontend."
+    )
     @GetMapping("/init")
     public ResponseEntity<List<AreaInitDTO>> getAreasInit(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        headers.add("Allow", "GET");
-        return new ResponseEntity<>(climbingAreaService.getAreasInit(), headers, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(climbingAreaService.getAreasInit());
     }
 
+    @Operation(
+            summary = "Get Map Data",
+            description = "Returns the area and current weather data needed for the map."
+    )
     @GetMapping("/map")
     public ResponseEntity<List<AreaMapDTO>> getAreaMapData(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        headers.add("Allow", "GET");
-        return new ResponseEntity<>(climbingAreaService.getAreaMapData(), headers, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(climbingAreaService.getAreaMapData());
     }
 
+    @Operation(
+            summary = "Get Climbing Area",
+            description = "Returns all data needed to initialize a climbing area's dashboard."
+    )
     @GetMapping("/{areaName}")
     public ResponseEntity<ClimbingAreaDTO> getClimbingAreaData(@PathVariable String areaName){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        headers.add("Allow", "GET");
-        return new ResponseEntity<>(climbingAreaService.getClimbingAreaData(areaName), headers, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(climbingAreaService.getClimbingAreaData(areaName));
     }
 }
