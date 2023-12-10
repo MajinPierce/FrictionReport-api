@@ -92,6 +92,4 @@ jobs:
 
     - name: Force deployment
       run: |
-        ecs_cluster=${{vars.ECS_CLUSTER}}
-        ecs_service=${{vars.ECS_SERVICE}}
-        aws ecs update-service --cluster $ecs_cluster --service $ecs_service --force-new-deployment
+        aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment
