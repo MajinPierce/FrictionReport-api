@@ -7,5 +7,5 @@ public record AreaMapDTO(
         String fullName,
         Double lat,
         Double lon,
-        CurrentWeatherDTO currentWeather
+        CurrentWeatherDTO current
 ){}

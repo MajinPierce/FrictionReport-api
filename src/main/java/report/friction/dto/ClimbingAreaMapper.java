@@ -49,5 +49,6 @@ public interface ClimbingAreaMapper {
     List<AreaMapDTO> climbingAreaEntityListToAreaMapDTOList(List<ClimbingAreaEntity> climbingAreaEntities);
 
     @Mapping(source="areaName", target="name")
+    @Mapping(source="currentWeather", target="current")
     AreaMapDTO climbingAreaEntityToAreaMapDTO(ClimbingAreaEntity climbingArea);
 }
