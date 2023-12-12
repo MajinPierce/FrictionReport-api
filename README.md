@@ -1,4 +1,4 @@
-# Friction Report API
+# Friction Report API [![AWS ECS Deployment](https://github.com/MajinPierce/FrictionReport-api/actions/workflows/aws.yml/badge.svg)](https://github.com/MajinPierce/FrictionReport-api/actions/workflows/aws.yml)
 
 This is the backend API for [Friction Report](https://friction.report). It is currently running at [https://api.friction.report](https://api.friction.report) I was jealous of [Sendex](sendex.report), and wanted to make my own climbing weather report for areas a bit closer to home.
 
