@@ -13,7 +13,10 @@ friction-report:
 
 logging:
   level:
-    root: INFO
+    root: WARN
+    report.friction: info
+    org.springframework.web.servlet:
+      DispatcherServlet: trace
 
 springdoc:
   swagger-ui:
@@ -32,6 +35,8 @@ management:
         include: health
 
 spring:
+  mvc:
+    log-request-details: true
   datasource:
     url: jdbc:h2:mem:areadb;DATABASE_TO_UPPER=false
     driverClassName: org.h2.Driver
@@ -47,6 +52,7 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
     defer-datasource-initialization: true
+    open-in-view: false
   sql:
     init:
       platform: h2
@@ -66,6 +72,7 @@ spring:
 logging:
   level:
     root: debug
+    org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor: trace
 
 management:
   endpoints:
@@ -98,6 +105,11 @@ management:
       exposure:
         include: '*'
 
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor: trace
+  pattern:
+    console: "[%boldMagenta(FR-API)] [%boldGreen(DEV)] %d{yyyy-MM-dd HH:mm:ss} %highlight([%5p]) --- [%cyan(%15.15t)] %-100.100logger{1.} %boldYellow(::) %m%n%wEx"
 ---
 #PROD
 spring:
@@ -109,3 +121,7 @@ spring:
     aws:
       cloudwatch:
         region: us-east-1
+
+logging:
+  pattern:
+    console: "[FR-API] [PROD] %d{yyyy-MM-dd HH:mm:ss} [%5p] --- [%15.15t] %-40.40logger{1.} :: %m%n%wEx"
