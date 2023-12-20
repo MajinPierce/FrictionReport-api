@@ -48,10 +48,13 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
     public List<AreaMapDTO> getAreaMapData(){
         log.debug("Getting area map data");
         List<ClimbingAreaEntity> allAreas = climbingAreaRepository.findAll();
-        allAreas.stream().filter(area -> (
-                area.getUpdatedAt() == null ||
+        List<ClimbingAreaEntity> areasToUpdate = allAreas.stream().parallel()
+                .filter(area -> (area.getUpdatedAt() == null ||
                         (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)))
-                .forEach(area -> updateAreaData(area));
+                .map(this::updateAreaData)
+                .toList();
+        climbingAreaRepository.saveAll(areasToUpdate);
+        climbingAreaRepository.flush();
         return climbingAreaMapper.climbingAreaEntityListToAreaMapDTOList(allAreas);
     }
 
@@ -88,7 +91,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
         }
     }
 
-    private void updateAreaData(ClimbingAreaEntity area){
+    private ClimbingAreaEntity updateAreaData(ClimbingAreaEntity area){
         try {
             HttpRequest request = HttpRequest.newBuilder(
                             URI.create(OpenWeatherRequest.newRequest(area).onecall().exclude(Exclude.MINUTELY).build()))
@@ -98,7 +101,7 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService{
             area = objectMapper.readerForUpdating(area).readValue(response.body());
             area.onUpdate();
             log.debug("Updating data for area: {}", area.getFullName());
-            climbingAreaRepository.save(area);
+            return area;
         } catch (JsonProcessingException e){
             log.error(String.valueOf(e));
             throw new JacksonMappingException("Error mapping OpenWeatherMap Api response to climbing area entity");

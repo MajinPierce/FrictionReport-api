@@ -42,19 +42,19 @@ public class ClimbingAreaEntity {
     private Instant updatedAt;
     @JsonProperty("current")
     @JsonManagedReference
-    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private CurrentWeather currentWeather;
     @JsonProperty("hourly")
     @JsonManagedReference
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<HourlyWeather> hourlyWeather;
     @JsonProperty("daily")
     @JsonManagedReference
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<DailyWeather> dailyWeather;
     @JsonProperty("alerts")
     @JsonManagedReference
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WeatherAlerts> weatherAlerts;
 
     @PreUpdate

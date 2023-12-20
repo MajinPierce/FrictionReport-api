@@ -109,7 +109,7 @@ logging:
   level:
     org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor: trace
   pattern:
-    console: "[%boldMagenta(FR-API)] [%boldGreen(DEV)] %d{yyyy-MM-dd HH:mm:ss} %highlight([%5p]) --- [%cyan(%15.15t)] %-100.100logger{1.} %boldYellow(::) %m%n%wEx"
+    console: "[%boldMagenta(FR-API)] [%boldGreen(DEV)] %d{yyyy-MM-dd HH:mm:ss} %highlight([%5p]) --- [%cyan(%15.15t)] %-40.40logger{1.} %boldYellow(::) %m%n%wEx"
 ---
 #PROD
 spring:
