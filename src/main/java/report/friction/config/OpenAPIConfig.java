@@ -1,6 +1,5 @@
 package report.friction.config;
 
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -14,6 +13,8 @@ import java.util.List;
 
 @Configuration
 public class OpenAPIConfig {
+
+    public static final Long CACHING_TIMEOUT_SECONDS = 900L;
 
     @Value("${friction-report.url.dev}")
     private String devUrl;

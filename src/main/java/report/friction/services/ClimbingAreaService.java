@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface ClimbingAreaService {
 
-    public List<AreaInitDTO> getAreasInit();
+    List<AreaInitDTO> getAreasInit();
 
-    public List<AreaMapDTO> getAreaMapData();
+    List<AreaMapDTO> getAreaMapData();
 
-    public ClimbingAreaDTO getClimbingAreaData(String areaName);
+    ClimbingAreaDTO getClimbingAreaData(String areaName);
+
 }
