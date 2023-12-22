@@ -14,8 +14,6 @@ import java.util.List;
 @Configuration
 public class OpenAPIConfig {
 
-    public static final Long CACHING_TIMEOUT_SECONDS = 900L;
-
     @Value("${friction-report.url.dev}")
     private String devUrl;
     @Value("${friction-report.url.prod}")

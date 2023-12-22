@@ -14,9 +14,7 @@ import report.friction.dto.weather.WeatherDescriptionDTO;
 
 import java.util.List;
 
-@Mapper(
-        componentModel = "spring"
-)
+@Mapper(componentModel = "spring")
 public interface ClimbingAreaMapper {
 
     @Mapping(source="areaName", target="name")
@@ -41,7 +39,7 @@ public interface ClimbingAreaMapper {
 
     WeatherDescriptionDTO weatherDescriptionToDTO(WeatherDescription weatherDescription);
 
-    List<AreaInitDTO> climbingAreaEntityListToDTO(List<ClimbingAreaEntity> climbingAreaEntities);
+    List<AreaInitDTO> climbingAreaEntityListToAreaInitDTO(List<ClimbingAreaEntity> climbingAreaEntities);
 
     @Mapping(source="areaName", target="name")
     AreaInitDTO climbingAreaEntityToAreaInitDTO(ClimbingAreaEntity climbingArea);
