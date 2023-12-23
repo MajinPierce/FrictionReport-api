@@ -1,6 +1,6 @@
 # Friction Report API [![AWS ECS Deployment](https://github.com/MajinPierce/FrictionReport-api/actions/workflows/aws.yml/badge.svg)](https://github.com/MajinPierce/FrictionReport-api/actions/workflows/aws.yml)
 
-This is the backend API for [Friction Report](https://friction.report). It is currently running at [https://api.friction.report](https://api.friction.report) I was jealous of [Sendex](sendex.report), and wanted to make my own climbing weather report for areas a bit closer to home.
+This is the backend API for [Friction Report](https://friction.report). It is currently running at [https://api.friction.report](https://api.friction.report) I was jealous of [Sendex](https://sendex.report), and wanted to make my own climbing weather report for areas a bit closer to home.
 
 Keep in mind this is partially just for myself (and maybe some friends) to use, and partially to learn/practice.
 
@@ -58,7 +58,7 @@ The [issue tracker](https://github.com/MajinPierce/FrictionReport-api/issues) is
 
 # Future Plans / Wishful Thinking
 
-* Refactor service layer and write unit tests now that I know better
 * Total precipitation over the last x day/hours so that you can better judge rock conditions
 * Come up with a better formula for the sendex that explicitly takes into account precipitation
   * Would help establish what a good score actually is other than a vague ~100 is good
+* Potentially move sendex calculations to the backend 
