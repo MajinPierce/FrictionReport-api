@@ -33,12 +33,12 @@ public class DailyWeather extends Weather {
     private Double rain;
     private Double snow;
     private String summary;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name="time_of_day")
     @Column(name="temperature")
     @JsonProperty("feels_like")
     private Map<String, Double> feelsLike;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name="time_of_day")
     @Column(name="temperature")
     @JsonProperty("temp")

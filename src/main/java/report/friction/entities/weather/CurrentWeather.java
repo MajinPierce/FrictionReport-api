@@ -30,13 +30,13 @@ public class CurrentWeather extends Weather {
     private Integer sunrise;
     private Integer sunset;
     private Integer visibility;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="current_rain")
     @MapKeyColumn(name="timeframe")
     @Column(name="unit_per_hour")
     @JsonProperty("rain")
     private Map<String, Double> rain;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="current_snow")
     @MapKeyColumn(name="timeframe")
     @Column(name="unit_per_hour")
