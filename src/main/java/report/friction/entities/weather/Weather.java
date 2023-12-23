@@ -32,7 +32,7 @@ public abstract class Weather {
     private Double uvi;
     @JsonProperty("weather")
     @JsonManagedReference
-    @OneToMany(mappedBy="weather", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="weather", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WeatherDescription> weatherDescription;
 
 }
