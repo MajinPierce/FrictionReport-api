@@ -4,7 +4,7 @@ WORKDIR friction-report/
 COPY pom.xml .
 COPY src src
 
-RUN mvn package -DskipTests
+RUN mvn package
 
 FROM eclipse-temurin:17-jre-alpine
 

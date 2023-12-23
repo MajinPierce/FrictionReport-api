@@ -1,8 +1,9 @@
 package report.friction.services;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import report.friction.entities.ClimbingAreaEntity;
@@ -12,16 +13,13 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class StartupService implements ApplicationListener<ApplicationReadyEvent> {
+@RequiredArgsConstructor
+public class StartupService {
 
     private final ClimbingAreaRepository climbingAreaRepository;
 
-    public StartupService(ClimbingAreaRepository climbingAreaRepository){
-        this.climbingAreaRepository = climbingAreaRepository;
-    }
-
-    @Override
-    public void onApplicationEvent(final ApplicationReadyEvent event) {
+    @EventListener(ApplicationReadyEvent.class)
+    public void logInitialization() {
         List<ClimbingAreaEntity> areas = climbingAreaRepository.findAll();
         for (ClimbingAreaEntity area: areas) {
             log.info("{}, {} | {}, {} | {}",
@@ -32,4 +30,5 @@ public class StartupService implements ApplicationListener<ApplicationReadyEvent
                     area.getMountainProjectUrl());
         }
     }
+
 }

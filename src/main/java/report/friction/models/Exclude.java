@@ -9,7 +9,7 @@ public enum Exclude {
 
     public final String value;
 
-    private Exclude(String value){
+    Exclude(String value){
         this.value = value;
     }
 }

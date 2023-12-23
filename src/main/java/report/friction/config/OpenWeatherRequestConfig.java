@@ -1,6 +1,5 @@
 package report.friction.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,25 +8,7 @@ import java.net.http.HttpClient;
 @Configuration
 public class OpenWeatherRequestConfig {
 
-    public static String domain;
-    public static String apiKey;
-    public static String units;
-
-    //TODO: I don't like this weird value injection I did
-    @Value("${openweather.domain}")
-    private void setDomain(String domain) {
-        OpenWeatherRequestConfig.domain = domain;
-    }
-
-    @Value("${openweather.apiKey}")
-    private void setApiKey(String apiKey) {
-        OpenWeatherRequestConfig.apiKey = apiKey;
-    }
-
-    @Value("${openweather.units}")
-    private void setUnits(String units) {
-        OpenWeatherRequestConfig.units = units;
-    }
+    public static final Long CACHING_TIMEOUT_SECONDS = 900L;
 
     @Bean
     HttpClient httpClient(){

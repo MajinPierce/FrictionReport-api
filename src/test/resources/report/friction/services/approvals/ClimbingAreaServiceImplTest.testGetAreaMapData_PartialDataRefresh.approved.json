@@ -1,0 +1,23 @@
+[ {
+  "name" : "leda",
+  "fullName" : "Leda",
+  "lat" : 35.2356,
+  "lon" : -85.2265,
+  "current" : {
+    "dt" : 1703295921,
+    "humidity" : 66,
+    "dewPoint" : 29.5,
+    "temperature" : 39.58
+  }
+}, {
+  "name" : "redrivergorge",
+  "fullName" : "Red River Gorge",
+  "lat" : 37.67745,
+  "lon" : -83.68217,
+  "current" : {
+    "dt" : 1703295895,
+    "humidity" : 59,
+    "dewPoint" : 34.03,
+    "temperature" : 47.64
+  }
+} ]

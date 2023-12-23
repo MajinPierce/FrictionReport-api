@@ -42,38 +42,24 @@ public class ClimbingAreaEntity {
     private Instant updatedAt;
     @JsonProperty("current")
     @JsonManagedReference
-    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy="climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private CurrentWeather currentWeather;
     @JsonProperty("hourly")
     @JsonManagedReference
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<HourlyWeather> hourlyWeather;
     @JsonProperty("daily")
     @JsonManagedReference
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<DailyWeather> dailyWeather;
     @JsonProperty("alerts")
     @JsonManagedReference
-    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WeatherAlerts> weatherAlerts;
 
-    @PreUpdate
+    @PrePersist
     public void onUpdate() {
         this.updatedAt = Instant.now();
     }
 
-    public void setHourlyWeather(List<HourlyWeather> hourlyWeather) {
-        this.hourlyWeather.clear();
-        this.hourlyWeather.addAll(hourlyWeather);
-    }
-
-    public void setDailyWeather(List<DailyWeather> dailyWeather) {
-        this.dailyWeather.clear();
-        this.dailyWeather.addAll(dailyWeather);
-    }
-
-    public void setWeatherAlerts(List<WeatherAlerts> weatherAlerts) {
-        this.weatherAlerts.clear();
-        this.weatherAlerts.addAll(weatherAlerts);
-    }
 }

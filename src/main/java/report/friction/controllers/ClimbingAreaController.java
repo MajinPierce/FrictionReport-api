@@ -2,25 +2,22 @@ package report.friction.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import report.friction.dto.*;
 import report.friction.services.ClimbingAreaService;
-import report.friction.services.ClimbingAreaServiceImpl;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin
 @Tag(name="Climbing Area Controller")
+@RequiredArgsConstructor
 public class ClimbingAreaController {
 
     private final ClimbingAreaService climbingAreaService;
-
-    public ClimbingAreaController(ClimbingAreaServiceImpl climbingAreaService){
-        this.climbingAreaService = climbingAreaService;
-    }
 
     @Operation(
             summary = "Root path",
