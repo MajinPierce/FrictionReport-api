@@ -1,0 +1,384 @@
+{
+  "name" : "leda",
+  "fullName" : "Leda",
+  "lat" : 35.2356,
+  "lon" : -85.2265,
+  "mountainProjectUrl" : "https://www.mountainproject.com/area/105888074/leda",
+  "state" : "Tennessee",
+  "current" : {
+    "dt" : 1703295921,
+    "humidity" : 66,
+    "dewPoint" : 29.5,
+    "temperature" : 39.58
+  },
+  "hourly" : [ {
+    "dt" : 1703293200,
+    "humidity" : 63,
+    "dewPoint" : 28.8,
+    "temperature" : 39.92
+  }, {
+    "dt" : 1703296800,
+    "humidity" : 66,
+    "dewPoint" : 29.5,
+    "temperature" : 39.58
+  }, {
+    "dt" : 1703300400,
+    "humidity" : 63,
+    "dewPoint" : 28.62,
+    "temperature" : 39.72
+  }, {
+    "dt" : 1703304000,
+    "humidity" : 61,
+    "dewPoint" : 28.08,
+    "temperature" : 39.9
+  }, {
+    "dt" : 1703307600,
+    "humidity" : 59,
+    "dewPoint" : 27.21,
+    "temperature" : 39.72
+  }, {
+    "dt" : 1703311200,
+    "humidity" : 57,
+    "dewPoint" : 26.62,
+    "temperature" : 39.88
+  }, {
+    "dt" : 1703314800,
+    "humidity" : 58,
+    "dewPoint" : 25.48,
+    "temperature" : 38.59
+  }, {
+    "dt" : 1703318400,
+    "humidity" : 58,
+    "dewPoint" : 26.17,
+    "temperature" : 39.06
+  }, {
+    "dt" : 1703322000,
+    "humidity" : 61,
+    "dewPoint" : 26.89,
+    "temperature" : 38.48
+  }, {
+    "dt" : 1703325600,
+    "humidity" : 67,
+    "dewPoint" : 27.63,
+    "temperature" : 37.17
+  }, {
+    "dt" : 1703329200,
+    "humidity" : 71,
+    "dewPoint" : 28.72,
+    "temperature" : 36.79
+  }, {
+    "dt" : 1703332800,
+    "humidity" : 75,
+    "dewPoint" : 29.91,
+    "temperature" : 36.64
+  }, {
+    "dt" : 1703336400,
+    "humidity" : 79,
+    "dewPoint" : 31.05,
+    "temperature" : 36.36
+  }, {
+    "dt" : 1703340000,
+    "humidity" : 75,
+    "dewPoint" : 33.57,
+    "temperature" : 40.28
+  }, {
+    "dt" : 1703343600,
+    "humidity" : 71,
+    "dewPoint" : 36.48,
+    "temperature" : 44.67
+  }, {
+    "dt" : 1703347200,
+    "humidity" : 68,
+    "dewPoint" : 39.18,
+    "temperature" : 48.52
+  }, {
+    "dt" : 1703350800,
+    "humidity" : 64,
+    "dewPoint" : 40.86,
+    "temperature" : 51.93
+  }, {
+    "dt" : 1703354400,
+    "humidity" : 61,
+    "dewPoint" : 41.74,
+    "temperature" : 54.48
+  }, {
+    "dt" : 1703358000,
+    "humidity" : 57,
+    "dewPoint" : 42.03,
+    "temperature" : 56.3
+  }, {
+    "dt" : 1703361600,
+    "humidity" : 56,
+    "dewPoint" : 42.15,
+    "temperature" : 57.04
+  }, {
+    "dt" : 1703365200,
+    "humidity" : 60,
+    "dewPoint" : 43.39,
+    "temperature" : 56.52
+  }, {
+    "dt" : 1703368800,
+    "humidity" : 72,
+    "dewPoint" : 43.84,
+    "temperature" : 52.02
+  }, {
+    "dt" : 1703372400,
+    "humidity" : 80,
+    "dewPoint" : 42.75,
+    "temperature" : 48.07
+  }, {
+    "dt" : 1703376000,
+    "humidity" : 82,
+    "dewPoint" : 42.67,
+    "temperature" : 47.21
+  }, {
+    "dt" : 1703379600,
+    "humidity" : 83,
+    "dewPoint" : 43.02,
+    "temperature" : 47.46
+  }, {
+    "dt" : 1703383200,
+    "humidity" : 83,
+    "dewPoint" : 43.61,
+    "temperature" : 47.79
+  }, {
+    "dt" : 1703386800,
+    "humidity" : 88,
+    "dewPoint" : 43.79,
+    "temperature" : 46.58
+  }, {
+    "dt" : 1703390400,
+    "humidity" : 89,
+    "dewPoint" : 43.83,
+    "temperature" : 46.2
+  }, {
+    "dt" : 1703394000,
+    "humidity" : 90,
+    "dewPoint" : 43.68,
+    "temperature" : 45.79
+  }, {
+    "dt" : 1703397600,
+    "humidity" : 92,
+    "dewPoint" : 43.36,
+    "temperature" : 45.03
+  }, {
+    "dt" : 1703401200,
+    "humidity" : 93,
+    "dewPoint" : 43.05,
+    "temperature" : 44.31
+  }, {
+    "dt" : 1703404800,
+    "humidity" : 94,
+    "dewPoint" : 42.89,
+    "temperature" : 43.79
+  }, {
+    "dt" : 1703408400,
+    "humidity" : 95,
+    "dewPoint" : 42.76,
+    "temperature" : 43.52
+  }, {
+    "dt" : 1703412000,
+    "humidity" : 95,
+    "dewPoint" : 42.73,
+    "temperature" : 43.38
+  }, {
+    "dt" : 1703415600,
+    "humidity" : 96,
+    "dewPoint" : 42.73,
+    "temperature" : 43.21
+  }, {
+    "dt" : 1703419200,
+    "humidity" : 96,
+    "dewPoint" : 42.57,
+    "temperature" : 42.96
+  }, {
+    "dt" : 1703422800,
+    "humidity" : 97,
+    "dewPoint" : 42.39,
+    "temperature" : 42.69
+  }, {
+    "dt" : 1703426400,
+    "humidity" : 93,
+    "dewPoint" : 44.11,
+    "temperature" : 45.46
+  }, {
+    "dt" : 1703430000,
+    "humidity" : 83,
+    "dewPoint" : 45.23,
+    "temperature" : 49.44
+  }, {
+    "dt" : 1703433600,
+    "humidity" : 76,
+    "dewPoint" : 45.86,
+    "temperature" : 52.61
+  }, {
+    "dt" : 1703437200,
+    "humidity" : 71,
+    "dewPoint" : 46.0,
+    "temperature" : 54.82
+  }, {
+    "dt" : 1703440800,
+    "humidity" : 65,
+    "dewPoint" : 46.27,
+    "temperature" : 57.31
+  }, {
+    "dt" : 1703444400,
+    "humidity" : 59,
+    "dewPoint" : 45.88,
+    "temperature" : 59.41
+  }, {
+    "dt" : 1703448000,
+    "humidity" : 61,
+    "dewPoint" : 46.72,
+    "temperature" : 59.52
+  }, {
+    "dt" : 1703451600,
+    "humidity" : 65,
+    "dewPoint" : 46.78,
+    "temperature" : 57.9
+  }, {
+    "dt" : 1703455200,
+    "humidity" : 72,
+    "dewPoint" : 46.71,
+    "temperature" : 55.06
+  }, {
+    "dt" : 1703458800,
+    "humidity" : 78,
+    "dewPoint" : 46.6,
+    "temperature" : 52.81
+  }, {
+    "dt" : 1703462400,
+    "humidity" : 83,
+    "dewPoint" : 46.56,
+    "temperature" : 50.9
+  } ],
+  "daily" : [ {
+    "dt" : 1703264400,
+    "humidity" : 36,
+    "dewPoint" : 24.78,
+    "pop" : 0.0,
+    "temperature" : {
+      "day" : 49.93,
+      "min" : 36.09,
+      "max" : 53.22,
+      "night" : 39.9,
+      "eve" : 41.76,
+      "morn" : 36.59
+    },
+    "weather" : [ {
+      "icon" : "04d"
+    } ]
+  }, {
+    "dt" : 1703350800,
+    "humidity" : 64,
+    "dewPoint" : 40.86,
+    "pop" : 0.0,
+    "temperature" : {
+      "day" : 51.93,
+      "min" : 36.36,
+      "max" : 57.04,
+      "night" : 46.2,
+      "eve" : 48.07,
+      "morn" : 36.79
+    },
+    "weather" : [ {
+      "icon" : "04d"
+    } ]
+  }, {
+    "dt" : 1703437200,
+    "humidity" : 71,
+    "dewPoint" : 46.0,
+    "pop" : 0.0,
+    "temperature" : {
+      "day" : 54.82,
+      "min" : 42.69,
+      "max" : 59.52,
+      "night" : 50.14,
+      "eve" : 52.81,
+      "morn" : 43.21
+    },
+    "weather" : [ {
+      "icon" : "04d"
+    } ]
+  }, {
+    "dt" : 1703523600,
+    "humidity" : 96,
+    "dewPoint" : 52.88,
+    "pop" : 1.0,
+    "temperature" : {
+      "day" : 53.46,
+      "min" : 50.09,
+      "max" : 54.75,
+      "night" : 53.1,
+      "eve" : 54.1,
+      "morn" : 53.17
+    },
+    "weather" : [ {
+      "icon" : "10d"
+    } ]
+  }, {
+    "dt" : 1703610000,
+    "humidity" : 95,
+    "dewPoint" : 54.3,
+    "pop" : 0.54,
+    "temperature" : {
+      "day" : 55.08,
+      "min" : 50.05,
+      "max" : 56.35,
+      "night" : 50.05,
+      "eve" : 50.74,
+      "morn" : 51.82
+    },
+    "weather" : [ {
+      "icon" : "10d"
+    } ]
+  }, {
+    "dt" : 1703696400,
+    "humidity" : 55,
+    "dewPoint" : 38.01,
+    "pop" : 0.46,
+    "temperature" : {
+      "day" : 53.37,
+      "min" : 43.11,
+      "max" : 53.37,
+      "night" : 44.67,
+      "eve" : 43.97,
+      "morn" : 43.11
+    },
+    "weather" : [ {
+      "icon" : "10d"
+    } ]
+  }, {
+    "dt" : 1703782800,
+    "humidity" : 74,
+    "dewPoint" : 26.96,
+    "pop" : 0.47,
+    "temperature" : {
+      "day" : 33.76,
+      "min" : 31.19,
+      "max" : 40.05,
+      "night" : 34.23,
+      "eve" : 34.61,
+      "morn" : 31.19
+    },
+    "weather" : [ {
+      "icon" : "04d"
+    } ]
+  }, {
+    "dt" : 1703869200,
+    "humidity" : 56,
+    "dewPoint" : 25.93,
+    "pop" : 0.22,
+    "temperature" : {
+      "day" : 39.69,
+      "min" : 29.62,
+      "max" : 40.96,
+      "night" : 30.16,
+      "eve" : 32.49,
+      "morn" : 32.18
+    },
+    "weather" : [ {
+      "icon" : "03d"
+    } ]
+  } ]
+}

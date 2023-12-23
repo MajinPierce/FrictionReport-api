@@ -86,6 +86,11 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.approvaltests</groupId>
+			<artifactId>approvaltests</artifactId>
+			<version>22.3.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

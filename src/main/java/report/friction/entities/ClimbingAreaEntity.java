@@ -57,23 +57,9 @@ public class ClimbingAreaEntity {
     @OneToMany(mappedBy = "climbingArea", cascade=CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<WeatherAlerts> weatherAlerts;
 
-    @PreUpdate
+    @PrePersist
     public void onUpdate() {
         this.updatedAt = Instant.now();
     }
 
-    public void setHourlyWeather(List<HourlyWeather> hourlyWeather) {
-        this.hourlyWeather.clear();
-        this.hourlyWeather.addAll(hourlyWeather);
-    }
-
-    public void setDailyWeather(List<DailyWeather> dailyWeather) {
-        this.dailyWeather.clear();
-        this.dailyWeather.addAll(dailyWeather);
-    }
-
-    public void setWeatherAlerts(List<WeatherAlerts> weatherAlerts) {
-        this.weatherAlerts.clear();
-        this.weatherAlerts.addAll(weatherAlerts);
-    }
 }

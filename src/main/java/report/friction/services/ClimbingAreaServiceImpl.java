@@ -10,6 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -70,13 +71,14 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService {
 
     public ClimbingAreaDTO getClimbingAreaData(String areaName){
         log.debug("Getting area weather data: " + areaName);
-        ClimbingAreaEntity area = climbingAreaRepository.findByAreaName(
+        Optional<ClimbingAreaEntity> areaOpt = climbingAreaRepository.findByAreaName(
                 areaName.replaceAll("[-+._ ]", "").trim().toLowerCase()
         );
-        if(area == null){
-            log.error("Tried accessing area that doesn't exist: {}", areaName);
+        if(areaOpt.isEmpty()){
+            log.warn("Tried accessing area that doesn't exist: {}", areaName);
             throw new AreaNotFoundException("Climbing area not found: " + areaName);
         }
+        ClimbingAreaEntity area = areaOpt.get();
         if(area.getUpdatedAt() == null || (Instant.now().getEpochSecond() - area.getUpdatedAt().getEpochSecond() > CACHING_TIMEOUT_SECONDS)){
             updateAreaData(area);
             return climbingAreaMapper.climbingAreaEntityToDTO(climbingAreaRepository.save(area));
@@ -84,32 +86,6 @@ public class ClimbingAreaServiceImpl implements ClimbingAreaService {
             return climbingAreaMapper.climbingAreaEntityToDTO(area);
         }
     }
-
-//    private ClimbingAreaEntity updateAreaData(ClimbingAreaEntity area){
-//        log.debug("Updating data for area: {}", area.getFullName());
-//        try {
-//            HttpRequest request = HttpRequest
-//                    .newBuilder(URI.create(
-//                            OpenWeatherRequest.newRequest(area).onecall().exclude(Exclude.MINUTELY).build()
-//                    ))
-//                    .header("Content-Type", "application/json").build();
-//            log.debug("Sending open weather map request to url: {}",
-//                    request.uri().toString().replaceAll("(?<=&appid=).*", "OPEN_WEATHER_API_KEY")
-//            );
-//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//            area = objectMapper.readerForUpdating(area).readValue(response.body());
-//            area.onUpdate();
-//            return area;
-//        } catch (JsonProcessingException e){
-//            String errorMessage = "Error mapping OpenWeatherMap Api response to climbing area entity";
-//            log.error(errorMessage, e);
-//            throw new JacksonMappingException(errorMessage);
-//        } catch (java.io.IOException | InterruptedException e){
-//            String errorMessage = "Error connecting to OpenWeatherMap Api";
-//            log.error(errorMessage, e);
-//            throw new OpenWeatherException(errorMessage);
-//        }
-//    }
 
     private ClimbingAreaEntity updateAreaData(ClimbingAreaEntity area){
         log.debug("Updating data for area: {}", area.getFullName());

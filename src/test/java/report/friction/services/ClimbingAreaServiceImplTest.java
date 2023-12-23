@@ -1,19 +1,15 @@
 package report.friction.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.approvaltests.JsonJacksonApprovals;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
-import report.friction.FrictionReportApiApplication;
-import report.friction.dto.AreaInitDTO;
-import report.friction.dto.ClimbingAreaDTO;
-import report.friction.dto.ClimbingAreaMapper;
-import report.friction.dto.ClimbingAreaMapperImpl;
+import report.friction.dto.*;
 import report.friction.entities.ClimbingAreaEntity;
+import report.friction.exceptions.custom.AreaNotFoundException;
+import report.friction.exceptions.custom.JacksonMappingException;
+import report.friction.exceptions.custom.OpenWeatherException;
 import report.friction.repositories.ClimbingAreaRepository;
 
 import java.net.URL;
@@ -23,11 +19,11 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,7 +45,14 @@ class ClimbingAreaServiceImplTest {
             units
     );
 
-    private List<ClimbingAreaEntity> getMockAreas(){
+    private static ObjectMapper mapper;
+
+    @BeforeAll
+    public static void init(){
+        mapper = new ObjectMapper();
+    }
+
+    private List<ClimbingAreaEntity> getMockUninitializedAreas(){
         ClimbingAreaEntity area1 = new ClimbingAreaEntity();
         area1.setId(1);
         area1.setAreaName("leda");
@@ -71,7 +74,7 @@ class ClimbingAreaServiceImplTest {
         return List.of(area1, area2);
     }
 
-    private ClimbingAreaEntity getMockArea(){
+    private ClimbingAreaEntity getMockUninitializedArea(){
         ClimbingAreaEntity area1 = new ClimbingAreaEntity();
         area1.setId(1);
         area1.setAreaName("leda");
@@ -85,8 +88,8 @@ class ClimbingAreaServiceImplTest {
     }
 
     @Test
-    public void testGetAreasInit(){
-        List<ClimbingAreaEntity> areas = getMockAreas();
+    void testGetAreasInit(){
+        List<ClimbingAreaEntity> areas = getMockUninitializedAreas();
 
         when(climbingAreaRepository.findAll())
                 .thenReturn(areas);
@@ -110,34 +113,150 @@ class ClimbingAreaServiceImplTest {
     }
 
     @Test
-    public void testGetAreaMapData_AllUpToDate(){}
+    void testGetAreaMapData_AllUpToDate() throws Exception{
+        List<ClimbingAreaEntity> areas = getMockUninitializedAreas();
+
+        URL ledaResponseFile = getClass().getClassLoader().getResource("mockResponses/ledaExample.json");
+        String ledaResponse = new String(Files.readAllBytes(Paths.get(ledaResponseFile.toURI())));
+        URL rrgResponseFile = getClass().getClassLoader().getResource("mockResponses/rrgExample.json");
+        String rrgResponse = new String(Files.readAllBytes(Paths.get(rrgResponseFile.toURI())));
+
+        ClimbingAreaEntity leda = areas.get(0);
+        leda = mapper.readerForUpdating(leda).readValue(ledaResponse);
+        leda.onUpdate();
+        ClimbingAreaEntity rrg = areas.get(1);
+        rrg = mapper.readerForUpdating(rrg).readValue(rrgResponse);
+        rrg.onUpdate();
+
+        List<ClimbingAreaEntity> updatedAreas = List.of(leda, rrg);
+
+        when(climbingAreaRepository.findAll())
+                .thenReturn(updatedAreas);
+
+        List<AreaMapDTO> response = climbingAreaService.getAreaMapData();
+        JsonJacksonApprovals.verifyAsJson(response);
+    }
 
     @Test
-    public void testGetAreaMapData_PartialDataRefresh(){}
+    void testGetAreaMapData_PartialDataRefresh() throws Exception{
+        List<ClimbingAreaEntity> areas = getMockUninitializedAreas();
+        HttpResponse mockLedaResponse = mock(HttpResponse.class);
+        URL ledaResponseFile = getClass().getClassLoader().getResource("mockResponses/ledaExample.json");
+        String ledaResponse = new String(Files.readAllBytes(Paths.get(ledaResponseFile.toURI())));
+        URL rrgResponseFile = getClass().getClassLoader().getResource("mockResponses/rrgExample.json");
+        String rrgResponse = new String(Files.readAllBytes(Paths.get(rrgResponseFile.toURI())));
+
+        ClimbingAreaEntity rrg = areas.get(1);
+        rrg = mapper.readerForUpdating(rrg).readValue(rrgResponse);
+        rrg.onUpdate();
+
+        List<ClimbingAreaEntity> partialAreas = List.of(areas.get(0), rrg);
+
+        when(climbingAreaRepository.findAll())
+                .thenReturn(partialAreas);
+        when(client.send(any(HttpRequest.class), any()))
+                .thenReturn(mockLedaResponse)
+                .thenThrow(new RuntimeException("Should only be called once"));
+        when(mockLedaResponse.body())
+                .thenReturn(ledaResponse);
+        when(climbingAreaRepository.saveAll(areas))
+                .thenReturn(partialAreas);
+
+        List<AreaMapDTO> response = climbingAreaService.getAreaMapData();
+        JsonJacksonApprovals.verifyAsJson(response);
+    }
 
     @Test
-    public void testGetAreaMapData_FullDataRefresh(){}
+    void testGetAreaMapData_FullDataRefresh() throws Exception{
+        List<ClimbingAreaEntity> areas = getMockUninitializedAreas();
+        HttpResponse mockLedaResponse = mock(HttpResponse.class);
+        HttpResponse mockRrgResponse = mock(HttpResponse.class);
+        URL ledaResponseFile = getClass().getClassLoader().getResource("mockResponses/ledaExample.json");
+        String ledaResponse = new String(Files.readAllBytes(Paths.get(ledaResponseFile.toURI())));
+        URL rrgResponseFile = getClass().getClassLoader().getResource("mockResponses/rrgExample.json");
+        String rrgResponse = new String(Files.readAllBytes(Paths.get(rrgResponseFile.toURI())));
+
+        when(climbingAreaRepository.findAll())
+                .thenReturn(areas);
+        when(client.send(any(HttpRequest.class), any()))
+                .thenAnswer(invocation -> {
+                    HttpRequest request = (HttpRequest) invocation.getArgument(0);
+                    HttpResponse<String> response;
+                    if(request.uri().getQuery().contains("35.2356") &&
+                            request.uri().getQuery().contains("-85.2265")){
+                        response = mockLedaResponse;
+                    } else if (request.uri().getQuery().contains("37.67745") &&
+                            request.uri().getQuery().contains("-83.68217")) {
+                        response = mockRrgResponse;
+                    } else {
+                        throw new RuntimeException("nothing matches");
+                    }
+                    return response;
+                });
+        when(mockLedaResponse.body())
+                .thenReturn(ledaResponse);
+        when(mockRrgResponse.body())
+                .thenReturn(rrgResponse);
+        when(climbingAreaRepository.saveAll(areas))
+                .thenReturn(areas);
+
+        List<AreaMapDTO> response = climbingAreaService.getAreaMapData();
+        JsonJacksonApprovals.verifyAsJson(response);
+    }
 
     @Test
-    public void testGetAreaMapData_JsonError(){}
-
-    @Test
-    public void testGetAreaMapData_OpenWeatherError(){}
-
-    @Test
-    public void testGetClimbingAreaData_UpToDate(){}
-
-    @Disabled
-    @Test
-    public void testGetClimbingAreaData_RefreshData() throws Exception{
-        ClimbingAreaEntity area = getMockArea();
+    void testGetAreaMapData_JsonError() throws Exception{
+        List<ClimbingAreaEntity> areas = getMockUninitializedAreas();
         HttpResponse mockResponse = mock(HttpResponse.class);
-        ObjectMapper mapper = new ObjectMapper();
-        URL ledaResponseFile = getClass().getClassLoader().getResource("test/ledaExample.json");
+        String nonMappableResponse = "{ \"cat1\":\"percy\", \"cat2\":\"artemis\"}";
+
+        when(climbingAreaRepository.findAll())
+                .thenReturn(areas);
+        when(client.send(any(HttpRequest.class), any()))
+                .thenReturn(mockResponse);
+        when(mockResponse.body())
+                .thenReturn(nonMappableResponse);
+
+        assertThrows(JacksonMappingException.class, () -> climbingAreaService.getAreaMapData());
+    }
+
+    @Test
+    void testGetAreaMapData_OpenWeatherError() throws Exception{
+        List<ClimbingAreaEntity> areas = getMockUninitializedAreas();
+
+        when(climbingAreaRepository.findAll())
+                .thenReturn(areas);
+        when(client.send(any(HttpRequest.class), any()))
+                .thenThrow(new InterruptedException("uh oh open weather broke"));
+
+        assertThrows(OpenWeatherException.class, () -> climbingAreaService.getAreaMapData());
+    }
+
+    @Test
+    void testGetClimbingAreaData_UpToDate() throws Exception{
+        ClimbingAreaEntity area = getMockUninitializedArea();
+
+        URL ledaResponseFile = getClass().getClassLoader().getResource("mockResponses/ledaExample.json");
+        String ledaResponse = new String(Files.readAllBytes(Paths.get(ledaResponseFile.toURI())));
+        area = mapper.readerForUpdating(area).readValue(ledaResponse);
+        area.onUpdate();
+
+        when(climbingAreaRepository.findByAreaName("leda"))
+                .thenReturn(Optional.of(area));
+
+        ClimbingAreaDTO response = climbingAreaService.getClimbingAreaData("leda");
+        JsonJacksonApprovals.verifyAsJson(response);
+    }
+
+    @Test
+    void testGetClimbingAreaData_RefreshData() throws Exception{
+        ClimbingAreaEntity area = getMockUninitializedArea();
+        HttpResponse mockResponse = mock(HttpResponse.class);
+        URL ledaResponseFile = getClass().getClassLoader().getResource("mockResponses/ledaExample.json");
         String ledaResponse = new String(Files.readAllBytes(Paths.get(ledaResponseFile.toURI())));
 
         when(climbingAreaRepository.findByAreaName("leda"))
-                .thenReturn(area);
+                .thenReturn(Optional.of(area));
         when(client.send(any(HttpRequest.class), any()))
                 .thenReturn(mockResponse);
         when(mockResponse.body())
@@ -146,17 +265,45 @@ class ClimbingAreaServiceImplTest {
                 .thenReturn(area);
 
         ClimbingAreaDTO response = climbingAreaService.getClimbingAreaData("leda");
-        System.out.println(response);
+        JsonJacksonApprovals.verifyAsJson(response);
 
     }
 
     @Test
-    public void testGetClimbingAreaData_AreaNotFound(){}
+    void testGetClimbingAreaData_AreaNotFound(){
+        when(climbingAreaRepository.findByAreaName(anyString()))
+                .thenReturn(Optional.empty());
+
+        assertThrows(AreaNotFoundException.class, () -> climbingAreaService.getClimbingAreaData("artemis"));
+    }
 
     @Test
-    public void testGetClimbingAreaData_JsonError(){}
+    void testGetClimbingAreaData_JsonError() throws Exception {
+        ClimbingAreaEntity area = getMockUninitializedArea();
+        HttpResponse mockResponse = mock(HttpResponse.class);
+        String nonMappableResponse = "{ \"cat1\":\"percy\", \"cat2\":\"artemis\"}";
+
+        when(climbingAreaRepository.findByAreaName("leda"))
+                .thenReturn(Optional.of(area));
+        when(client.send(any(HttpRequest.class), any()))
+                .thenReturn(mockResponse);
+        when(mockResponse.body())
+                .thenReturn(nonMappableResponse);
+
+        assertThrows(JacksonMappingException.class, () -> climbingAreaService.getClimbingAreaData("leda"));
+    }
 
     @Test
-    public void testGetClimbingAreaData_OpenWeatherError(){}
+    void testGetClimbingAreaData_OpenWeatherError() throws Exception{
+        ClimbingAreaEntity area = getMockUninitializedArea();
+
+        when(climbingAreaRepository.findByAreaName("leda"))
+                .thenReturn(Optional.of(area));
+        when(client.send(any(HttpRequest.class), any()))
+                .thenThrow(new InterruptedException("uh oh open weather broke"));
+
+        assertThrows(OpenWeatherException.class, () -> climbingAreaService.getClimbingAreaData("leda"));
+
+    }
 
 }
