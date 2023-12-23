@@ -31,7 +31,7 @@ public class WeatherAlerts {
     private Integer endTime;
     @Column(name="description", length=1800)
     private String description;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> tags;
 
 }

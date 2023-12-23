@@ -35,12 +35,12 @@ public class HourlyWeather extends Weather {
     private Integer probabilityOfPrecipitation;
     //there was an error with hibernate mapping and ElementCollection
     //updating from 6.1.7 -> 6.2.4 fixed
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name="timeframe")
     @Column(name="unit_per_hour")
     @JsonProperty("rain")
     private Map<String, Double> rain;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name="timeframe")
     @Column(name="unit_per_hour")
     @JsonProperty("snow")
